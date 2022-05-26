@@ -1,0 +1,27 @@
+import com.samuelav.buildsrc.dependencies.Dependencies
+
+apply from: "$rootDir/base_build__android.gradle"
+
+dependencies {
+    implementation Dependencies.AndroidX.composeUi
+    implementation Dependencies.AndroidX.composeMaterial
+    implementation Dependencies.AndroidX.composeFoundation
+    implementation Dependencies.AndroidX.composeIconsCore
+    implementation Dependencies.AndroidX.composeIconsExtended
+    implementation Dependencies.AndroidX.composeRuntimeLiveData
+
+    implementation Dependencies.AndroidX.composeActivity
+    implementation Dependencies.AndroidX.composeNavigation
+    implementation Dependencies.AndroidX.composeConstraint
+
+    implementation Dependencies.Koin.compose
+
+    implementation Dependencies.Google.accompanistNavigationAnimation
+    implementation Dependencies.Google.accompanistPermissions
+    implementation Dependencies.Google.accompanistPager
+    implementation Dependencies.Google.accompanistSwipeToRefresh
+    implementation Dependencies.Google.accompanistPlaceholder
+
+    debugImplementation Dependencies.AndroidX.composeUiTooling
+    androidTestImplementation Dependencies.Test.androidJunitCompose
+}
