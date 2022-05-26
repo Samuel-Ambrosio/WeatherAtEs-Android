@@ -4,7 +4,11 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.samuelav.data.remote.BuildConfig
 import com.samuelav.data.remote.BuildConfig.API_BASE_PATH
+import com.samuelav.data.remote.BuildConfig.API_KEY
 import com.samuelav.data.remote.utils.ResultCallAdapterFactory
+import com.samuelav.data.remote.weather.WeatherRemoteDataSourceImpl
+import com.samuelav.data.remote.weather.WeatherWs
+import com.samuelav.data.source.weather.WeatherRemoteDataSource
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -17,6 +21,8 @@ val remoteModule = module {
     single { okHttpClientProvider(get()) }
     single { gsonProvider() }
     single { retrofitProvider(get(), get()) }
+    single { weatherWsProvider(get()) }
+    single<WeatherRemoteDataSource> { WeatherRemoteDataSourceImpl(get()) }
 }
 
 /**
@@ -29,8 +35,16 @@ private fun interceptorProvider(): Interceptor = HttpLoggingInterceptor().apply 
 private fun okHttpClientProvider(interceptor: Interceptor) =
     OkHttpClient.Builder().apply {
         if (BuildConfig.DEBUG) { addInterceptor(interceptor) }
-        build()
-    }
+        addInterceptor { chain ->
+            val url = chain
+                .request()
+                .url
+                .newBuilder()
+                .addQueryParameter("appid", API_KEY)
+                .build()
+            chain.proceed(chain.request().newBuilder().url(url).build())
+        }
+    }.build()
 
 private fun gsonProvider() =
     GsonBuilder()
@@ -44,3 +58,8 @@ private fun retrofitProvider(okHttpClient: OkHttpClient, gson: Gson) =
         .addConverterFactory(GsonConverterFactory.create(gson))
         .addCallAdapterFactory(ResultCallAdapterFactory())
         .build()
+
+/**
+ *  Service providers
+ */
+private fun weatherWsProvider(retrofit: Retrofit) = retrofit.create(WeatherWs::class.java)

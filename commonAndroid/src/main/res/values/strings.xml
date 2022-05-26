@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">BaseProject</string>
+    <string name="app_name" translatable="false">WeatherAtEs</string>
     <string name="result_error_no_content">No content found.</string>
     <string name="result_error_bad_request">Service unavailable. Please try again later.</string>
     <string name="result_error_forbidden">Service unavailable. Please try again later.</string>

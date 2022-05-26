@@ -26,13 +26,12 @@ android {
 
     productFlavors {
         dev {
-            buildConfigField "String", "API_BASE_PATH", "\"https://jsonplaceholder.typicode.com/\""
-        }
-        pre {
-            buildConfigField "String", "API_BASE_PATH", "\"https://jsonplaceholder.typicode.com/\""
+            buildConfigField "String", "API_BASE_PATH", "\"https://api.openweathermap.org/\""
+            buildConfigField "String", "API_KEY", "\"6be076b23d72e404809b540bfdc9d0e0\""
         }
         pro {
-            buildConfigField "String", "API_BASE_PATH", "\"https://jsonplaceholder.typicode.com/\""
+            buildConfigField "String", "API_BASE_PATH", "\"https://api.openweathermap.org/\""
+            buildConfigField "String", "API_KEY", "\"6be076b23d72e404809b540bfdc9d0e0\""
         }
     }
 
@@ -64,6 +63,7 @@ android {
     kotlinOptions {
         jvmTarget = AppConfig.kotlinJvmTarget
         useIR = true
+        freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
     }
 
     packagingOptions {

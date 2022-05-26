@@ -15,6 +15,7 @@ fun Error.handleErrorMessage() =
         is Error.Server -> R.string.result_error_server
         is Error.BadGateway -> R.string.result_error_bad_gateway
         is Error.ServiceUnavailable -> R.string.result_error_service_unavailable
+        is Error.JsonSyntax -> R.string.result_error_unknown
         is Error.Network -> R.string.result_error_network
         is Error.Unknown -> R.string.result_error_unknown
     }

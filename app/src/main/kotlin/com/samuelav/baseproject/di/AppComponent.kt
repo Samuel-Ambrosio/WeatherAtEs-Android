@@ -7,4 +7,10 @@ import com.samuelav.domain.di.domainModule
 import com.samuelav.features.home.di.homeFeatureModule
 
 val appComponent =
-    listOf(appModule, localModule, remoteModule, repositoryModule, domainModule, homeFeatureModule)
+    listOf(
+        appModule,
+        localModule,
+        remoteModule,
+        repositoryModule,
+        domainModule,
+        homeFeatureModule)

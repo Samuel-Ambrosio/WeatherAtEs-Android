@@ -1,5 +1,6 @@
 package com.samuelav.data.remote.utils
 
+import com.google.gson.JsonSyntaxException
 import com.samuelav.common.Error
 import com.samuelav.common.Result
 import okhttp3.Request
@@ -36,6 +37,7 @@ internal class ResultResponseCall<S : Any>(
                         val error =
                             when (t) {
                                 is HttpException -> t.handleHttpException()
+                                is JsonSyntaxException -> Error.JsonSyntax
                                 else -> Error.Network
                             }
 

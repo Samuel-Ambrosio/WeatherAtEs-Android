@@ -16,8 +16,6 @@ dependencies {
     implementation project(Modules.common)
     implementation project(Modules.commonAndroid)
 
-    implementation project(Modules.analytics)
-
     implementation project(Modules.dataSource)
     implementation project(Modules.dataModel)
     implementation project(Modules.dataRepository)

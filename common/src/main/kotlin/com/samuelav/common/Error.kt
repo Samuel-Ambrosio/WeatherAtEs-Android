@@ -10,6 +10,7 @@ sealed class Error {
     object BadGateway: Error()
     object ServiceUnavailable: Error()
 
+    object JsonSyntax: Error()
     object Network: Error()
     object Unknown: Error()
 }
