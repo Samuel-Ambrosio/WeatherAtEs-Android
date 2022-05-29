@@ -1,7 +1,7 @@
 package com.samuelav.commonandroid.extensions
 
 import androidx.annotation.StringRes
-import com.samuelav.common.Error
+import com.samuelav.common.utils.Error
 import com.samuelav.commonandroid.R
 
 @StringRes

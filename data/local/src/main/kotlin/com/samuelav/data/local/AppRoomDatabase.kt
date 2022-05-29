@@ -1,14 +1,16 @@
 package com.samuelav.data.local
 
-/*import android.content.Context
+import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.samuelav.data.local.converters.Converters
+import com.samuelav.data.local.weather.WeatherDao
+import com.samuelav.data.local.weather.dbo.WeatherOneCallDBO
 
 @Database(
-    entities = [],
+    entities = [WeatherOneCallDBO::class],
     version = 1,
     exportSchema = false
 )
@@ -22,7 +24,7 @@ abstract class AppRoomDatabase: RoomDatabase() {
                 context.applicationContext,
                 AppRoomDatabase::class.java,
                 DATABASE_NAME
-            ).build()
+            ).fallbackToDestructiveMigration().build()
     }
-    //abstract fun getDao(): Dao
-}*/
+    abstract fun getWeatherDao(): WeatherDao
+}

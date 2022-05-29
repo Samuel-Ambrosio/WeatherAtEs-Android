@@ -18,6 +18,10 @@ object Versions {
         const val android = "3.1.5"
     }
 
+    object Android {
+        const val desugarJdkLibs = "1.1.5"
+    }
+
     object AndroidX {
         const val coreKtx = "1.7.0"
         const val appCompat = "1.4.1"

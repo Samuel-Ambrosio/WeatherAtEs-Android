@@ -5,5 +5,5 @@ import com.samuelav.data.repository.weather.WeatherRepositoryImpl
 import org.koin.dsl.module
 
 val repositoryModule = module {
-    single<WeatherRepository> { WeatherRepositoryImpl(get()) }
+    single<WeatherRepository> { WeatherRepositoryImpl(get(), get(), get()) }
 }

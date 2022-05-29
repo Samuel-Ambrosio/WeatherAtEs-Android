@@ -13,6 +13,10 @@ sealed class Dependencies {
         const val compose = "io.insert-koin:koin-androidx-compose:${Versions.Koin.android}"
     }
 
+    object Android {
+        const val desugarJdkLibs = "com.android.tools:desugar_jdk_libs:${Versions.Android.desugarJdkLibs}"
+    }
+
     object AndroidX {
         const val coreKtx = "androidx.core:core-ktx:${Versions.AndroidX.coreKtx}"
         const val appCompat = "androidx.appcompat:appcompat:${Versions.AndroidX.appCompat}"

@@ -1,7 +1,7 @@
 package com.samuelav.features.home.ui
 
 import androidx.lifecycle.viewModelScope
-import com.samuelav.common.fold
+import com.samuelav.common.utils.fold
 import com.samuelav.commonandroid.ui.base.BaseViewModel
 import com.samuelav.data.model.weather.WeatherOneCallBO
 import com.samuelav.domain.weather.GetWeatherUseCase
@@ -17,7 +17,7 @@ internal class MainViewModel(
     fun fetchWeatherInfo(refresh: Boolean = false) {
         viewModelScope.launch {
             emitState(MainState.Loading)
-            getWeatherUseCase().fold(
+            getWeatherUseCase(refresh = refresh).fold(
                 isLoading = { emitState(MainState.Loading) },
                 isSuccess = { emitState(MainState.Success(it)) },
                 isFailure = { emitState(MainState.Failure) }

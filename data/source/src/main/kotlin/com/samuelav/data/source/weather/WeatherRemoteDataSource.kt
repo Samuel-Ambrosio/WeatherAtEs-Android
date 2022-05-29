@@ -1,7 +1,7 @@
 package com.samuelav.data.source.weather
 
-import com.samuelav.common.Error
-import com.samuelav.common.Result
+import com.samuelav.common.utils.Error
+import com.samuelav.common.utils.Result
 import com.samuelav.data.model.weather.WeatherOneCallBO
 
 interface WeatherRemoteDataSource {

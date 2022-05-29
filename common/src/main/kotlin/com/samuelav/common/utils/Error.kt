@@ -1,4 +1,4 @@
-package com.samuelav.common
+package com.samuelav.common.utils
 
 sealed class Error {
     object NoContent: Error()
