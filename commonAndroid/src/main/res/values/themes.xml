@@ -1,12 +1,12 @@
 <resources>
     <style name="BaseTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_200</item>
+        <item name="colorPrimary">@color/celticBlueLight</item>
+        <item name="colorPrimaryVariant">@color/celticBlueLight</item>
+        <item name="colorSecondary">@color/azureWhite</item>
+        <item name="colorSecondaryVariant">@color/azureWhite</item>
 
         <item name="android:colorBackground">@color/white</item>
-        <item name="colorSurface">@color/white</item>
+        <item name="colorSurface">@color/lotion</item>
 
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorOnSecondary">@color/white</item>

@@ -44,7 +44,7 @@ tasks.named("dependencyUpdates").configure {
 dependencyGraphGenerator {
     generators {
         modules {
-            include = { dependency -> dependency.getModuleGroup().startsWith("BaseProject") }
+            include = { dependency -> dependency.getModuleGroup().startsWith("WeatherAtEs-Android") }
             children = { dependency -> true }
         }
     }

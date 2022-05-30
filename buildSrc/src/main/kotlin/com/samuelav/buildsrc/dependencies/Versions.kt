@@ -2,7 +2,7 @@ package com.samuelav.buildsrc.dependencies
 
 object Versions {
     object Gradle {
-        const val plugin = "7.1.2"
+        const val plugin = "7.2.1"
         const val versionsPlugin = "0.42.0"
         const val graphGenerator = "0.7.0"
     }
@@ -14,8 +14,8 @@ object Versions {
     }
 
     object Koin {
-        const val core = "3.1.5"
-        const val android = "3.1.5"
+        const val core = "3.2.0"
+        const val android = "3.2.0"
     }
 
     object Android {
@@ -31,8 +31,8 @@ object Versions {
 
         const val compose = "1.1.1"
         const val composeActivity = "1.4.0"
-        const val composeNavigation = "2.4.1"
-        const val composeConstraint = "1.0.0"
+        const val composeNavigation = "2.4.2"
+        const val composeConstraint = "1.0.1"
 
         const val splashScreen = "1.0.0-beta02"
 
@@ -42,7 +42,7 @@ object Versions {
 
     object Google {
         const val accompanist = "0.23.1"
-        const val material = "1.5.0"
+        const val material = "1.6.0"
         const val gson = "2.9.0"
     }
 

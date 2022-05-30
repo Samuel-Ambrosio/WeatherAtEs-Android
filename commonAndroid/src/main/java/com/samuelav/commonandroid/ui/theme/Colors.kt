@@ -4,10 +4,12 @@ import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.ui.graphics.Color
 
-internal val Purple200 = Color(0xFFBB86FC)
-internal val Purple500 = Color(0xFF6200EE)
-internal val Purple700 = Color(0xFF3700B3)
-internal val Teal200 = Color(0xFF03DAC5)
+internal val celticBlueLight = Color(0xFF335FD1)
+internal val azureWhite = Color(0xFFD2DFFF)
+
+internal val lotion = Color(0xFFFBFBFB)
+internal val eerieBlack = Color(0xFF201D1D)
+internal val raisinBlack = Color(0xFF242222)
 
 internal val celticBlue = Color(0xFF2365C7)
 internal val americanGreen = Color(0xFF49B336)
@@ -26,16 +28,16 @@ internal val BaseLightAppColors =
         error = darkPastelRed,
         materialColors =
             lightColors(
-                primary = Purple500,
-                primaryVariant = Purple700,
-                secondary = Teal200,
-                secondaryVariant = Teal200,
+                primary = celticBlueLight,
+                primaryVariant = celticBlueLight,
+                secondary = azureWhite,
+                secondaryVariant = azureWhite,
                 background = Color.White,
-                surface = Color.White,
+                surface = lotion,
                 onPrimary = Color.White,
                 onSecondary = Color.White,
-                onSurface = Color.Black,
-                onBackground = Color.Black,
+                onSurface = eerieBlack,
+                onBackground = eerieBlack,
             )
     )
 
@@ -47,12 +49,12 @@ internal val BaseDarkAppColors =
         error = melonRed,
         materialColors =
             darkColors(
-                primary = Purple200,
-                primaryVariant = Purple700,
-                secondary = Teal200,
-                secondaryVariant = Teal200,
-                background = Color.Black,
-                surface = Color.Black,
+                primary = celticBlueLight,
+                primaryVariant = celticBlueLight,
+                secondary = azureWhite,
+                secondaryVariant = azureWhite,
+                background = eerieBlack,
+                surface = raisinBlack,
                 onPrimary = Color.White,
                 onSecondary = Color.White,
                 onSurface = Color.White,
