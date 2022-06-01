@@ -8,6 +8,7 @@ import com.samuelav.data.model.weather.WeatherOneCallBO
 data class WeatherOneCallDBO(
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0,
+    val location: String,
     val lat: Double,
     val lon: Double,
     val timeZone: String,
@@ -19,6 +20,7 @@ data class WeatherOneCallDBO(
 
 internal fun WeatherOneCallBO.toDBO() =
     WeatherOneCallDBO(
+        location = location,
         lat = lat,
         lon = lon,
         timeZone = timeZone,
@@ -30,6 +32,7 @@ internal fun WeatherOneCallBO.toDBO() =
 
 internal fun WeatherOneCallDBO.toBO() =
     WeatherOneCallBO(
+        location = location,
         lat = lat,
         lon = lon,
         timeZone = timeZone,

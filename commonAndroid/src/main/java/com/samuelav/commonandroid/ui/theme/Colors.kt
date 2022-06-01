@@ -5,6 +5,7 @@ import androidx.compose.material.lightColors
 import androidx.compose.ui.graphics.Color
 
 internal val celticBlueLight = Color(0xFF335FD1)
+internal val blueberry = Color(0xFF4F7FFA)
 internal val azureWhite = Color(0xFFD2DFFF)
 
 internal val lotion = Color(0xFFFBFBFB)
@@ -29,7 +30,7 @@ internal val BaseLightAppColors =
         materialColors =
             lightColors(
                 primary = celticBlueLight,
-                primaryVariant = celticBlueLight,
+                primaryVariant = blueberry,
                 secondary = azureWhite,
                 secondaryVariant = azureWhite,
                 background = Color.White,
@@ -50,7 +51,7 @@ internal val BaseDarkAppColors =
         materialColors =
             darkColors(
                 primary = celticBlueLight,
-                primaryVariant = celticBlueLight,
+                primaryVariant = blueberry,
                 secondary = azureWhite,
                 secondaryVariant = azureWhite,
                 background = eerieBlack,

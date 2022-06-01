@@ -1,7 +1,7 @@
 <resources>
     <style name="BaseTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/celticBlueLight</item>
-        <item name="colorPrimaryVariant">@color/celticBlueLight</item>
+        <item name="colorPrimaryVariant">@color/blueberry</item>
         <item name="colorSecondary">@color/azureWhite</item>
         <item name="colorSecondaryVariant">@color/azureWhite</item>
 

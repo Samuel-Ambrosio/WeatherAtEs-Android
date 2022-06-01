@@ -9,25 +9,26 @@ import kotlinx.coroutines.launch
 
 internal class MainViewModel(
     private val getWeatherUseCase: GetWeatherUseCase
-): BaseViewModel<MainState, Unit>(MainState.Loading) {
+): BaseViewModel<MainState, Unit>(MainState()) {
     init {
         fetchWeatherInfo()
     }
 
     fun fetchWeatherInfo(refresh: Boolean = false) {
         viewModelScope.launch {
-            emitState(MainState.Loading)
+            emitState(state.value.copy(isLoading = true))
             getWeatherUseCase(refresh = refresh).fold(
-                isLoading = { emitState(MainState.Loading) },
-                isSuccess = { emitState(MainState.Success(it)) },
-                isFailure = { emitState(MainState.Failure) }
+                isLoading = { emitState(state.value.copy(isLoading = true)) },
+                isSuccess = { emitState(state.value.copy(isLoading = false, weatherInfo = it)) },
+                isFailure = {
+                    emitState(state.value.copy(isLoading = false))
+                    // Emit command
+                }
             )
         }
     }
 }
 
-internal sealed class MainState {
-    object Loading: MainState()
-    data class Success(val weatherInfo: WeatherOneCallBO): MainState()
-    object Failure: MainState()
-}
+internal data class MainState(
+    val isLoading: Boolean = true,
+    val weatherInfo: WeatherOneCallBO? = null)

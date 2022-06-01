@@ -20,8 +20,9 @@ data class WeatherOneCallDTO(
     val daily: List<DailyWeatherDTO>
 )
 
-fun WeatherOneCallDTO.toBO() =
+fun WeatherOneCallDTO.toBO(location: String) =
     WeatherOneCallBO(
+        location = location,
         lat = lat,
         lon = lon,
         timeZone = timeZone,

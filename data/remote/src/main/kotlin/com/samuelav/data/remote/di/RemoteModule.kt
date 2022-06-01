@@ -1,5 +1,6 @@
 package com.samuelav.data.remote.di
 
+import android.location.Geocoder
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.samuelav.data.remote.BuildConfig
@@ -21,8 +22,9 @@ val remoteModule = module {
     single { okHttpClientProvider(get()) }
     single { gsonProvider() }
     single { retrofitProvider(get(), get()) }
+    single { Geocoder(get()) }
     single { weatherWsProvider(get()) }
-    single<WeatherRemoteDataSource> { WeatherRemoteDataSourceImpl(get()) }
+    single<WeatherRemoteDataSource> { WeatherRemoteDataSourceImpl(get(), get()) }
 }
 
 /**

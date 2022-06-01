@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="celticBlueLight">#FF335FD1</color>
+    <color name="blueberry">#FF4F7FFA</color>
     <color name="azureWhite">#FFD2DFFF</color>
 
     <color name="lotion">#FFFBFBFB</color>

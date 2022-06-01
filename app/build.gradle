@@ -25,6 +25,7 @@ dependencies {
     implementation project(Modules.domain)
 
     implementation project(Modules.featuresHome)
+    implementation project(Modules.featuresDetails)
 
     implementation Dependencies.AndroidX.splashScreen
 }

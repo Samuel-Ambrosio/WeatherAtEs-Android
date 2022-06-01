@@ -1,6 +1,7 @@
 package com.samuelav.data.model.weather
 
 data class WeatherOneCallBO(
+    val location: String,
     val lat: Double,
     val lon: Double,
     val timeZone: String,
