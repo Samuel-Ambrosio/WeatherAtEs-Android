@@ -6,6 +6,10 @@ import com.samuelav.data.model.weather.WeatherOneCallBO
 import com.samuelav.data.repository.weather.WeatherRepository
 
 class GetWeatherUseCase(private val weatherRepository: WeatherRepository) {
-    suspend operator fun invoke(refresh: Boolean): Result<Error, WeatherOneCallBO> =
-        weatherRepository.getWeather(refresh = refresh)
+    suspend operator fun invoke(
+        lat: Double?,
+        lon: Double?,
+        refresh: Boolean
+    ): Result<Error, WeatherOneCallBO> =
+        weatherRepository.getWeather(lat = lat, lon = lon, refresh = refresh)
 }

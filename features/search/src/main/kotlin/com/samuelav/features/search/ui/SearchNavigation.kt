@@ -27,7 +27,7 @@ fun NavGraphBuilder.searchNavigation(appState: AppState) {
         startDestination = SearchDestination.Main.route,
         route = Feature.Search.rootRoute
     ) {
-        composable(route = SearchDestination.Main.route,) {
+        composable(route = SearchDestination.Main.route) {
             SearchScreen(
                 appState = appState,
                 onSearchLocationClick = { lat, lon ->

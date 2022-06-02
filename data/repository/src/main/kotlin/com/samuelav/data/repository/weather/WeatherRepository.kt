@@ -10,7 +10,7 @@ import com.samuelav.data.source.weather.WeatherRemoteDataSource
 import java.time.LocalDateTime
 
 interface WeatherRepository {
-    suspend fun getWeather(refresh: Boolean): Result<Error, WeatherOneCallBO>
+    suspend fun getWeather(lat: Double?, lon: Double?, refresh: Boolean): Result<Error, WeatherOneCallBO>
     suspend fun searchWeather(lat: Double, lon: Double, refresh: Boolean): Result<Error, WeatherOneCallBO>
     suspend fun getSearchedWeather(): Result<Error, WeatherOneCallBO>
 }
@@ -20,7 +20,11 @@ class WeatherRepositoryImpl(
     private val weatherLocalDataSource: WeatherLocalDataSource,
     private val weatherRemoteDataSource: WeatherRemoteDataSource
 ): WeatherRepository {
-    override suspend fun getWeather(refresh: Boolean): Result<Error, WeatherOneCallBO> =
+    override suspend fun getWeather(
+        lat: Double?,
+        lon: Double?,
+        refresh: Boolean
+    ): Result<Error, WeatherOneCallBO> =
         object : CacheRepositoryResponse<WeatherOneCallBO>() {
             override fun shouldFetchFromRemote(dataFromLocal: WeatherOneCallBO?): Boolean {
                 val nowLocalDateTime = LocalDateTime.now()
@@ -35,8 +39,8 @@ class WeatherRepositoryImpl(
 
             override suspend fun loadFromRemote(): Result<Error, WeatherOneCallBO> =
                 weatherRemoteDataSource.getWeather(
-                    lat = 40.416729,
-                    lon = -3.703339,
+                    lat = lat ?: appCommonConfiguration.defaultLat,
+                    lon = lon ?: appCommonConfiguration.defaultLon,
                     units = "metric",
                     lang = "es")
 

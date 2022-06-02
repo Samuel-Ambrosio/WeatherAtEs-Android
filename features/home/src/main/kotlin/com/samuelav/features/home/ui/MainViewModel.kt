@@ -5,11 +5,13 @@ import com.samuelav.common.utils.fold
 import com.samuelav.commonandroid.ui.base.BaseViewModel
 import com.samuelav.data.model.weather.WeatherOneCallBO
 import com.samuelav.domain.weather.GetWeatherUseCase
+import com.samuelav.features.home.domain.GetLastKnownLocationUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 internal class MainViewModel(
-    private val getWeatherUseCase: GetWeatherUseCase
+    private val getWeatherUseCase: GetWeatherUseCase,
+    private val getLastKnownLocationUseCase: GetLastKnownLocationUseCase
 ): BaseViewModel<MainState, Unit>(MainState()) {
 
     init {
@@ -19,7 +21,12 @@ internal class MainViewModel(
     fun fetchWeatherInfo(refresh: Boolean = false) {
         viewModelScope.launch(Dispatchers.IO) {
             emitState(state.value.copy(isLoading = true))
-            getWeatherUseCase(refresh = refresh).fold(
+            val lastKnownLocation = getLastKnownLocationUseCase()
+            getWeatherUseCase(
+                lat = lastKnownLocation?.latitude,
+                lon = lastKnownLocation?.longitude,
+                refresh = refresh
+            ).fold(
                 isLoading = { emitState(state.value.copy(isLoading = true)) },
                 isSuccess = { emitState(MainState(isLoading = false, weatherInfo = it)) },
                 isFailure = {

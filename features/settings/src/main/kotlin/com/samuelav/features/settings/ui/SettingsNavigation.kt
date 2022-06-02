@@ -14,7 +14,7 @@ fun NavGraphBuilder.settingsNavigation(appState: AppState) {
         startDestination = SettingsDestination.Main.route,
         route = Feature.Settings.rootRoute
     ) {
-        composable(route = SettingsDestination.Main.route,) {
+        composable(route = SettingsDestination.Main.route) {
             SettingsScreen(appState = appState)
         }
     }

@@ -1,14 +1,18 @@
 package com.samuelav.features.home.ui
 
+import android.Manifest
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.samuelav.commonandroid.app.AppState
@@ -22,6 +26,7 @@ import com.samuelav.data.model.weather.WeatherOneCallBO
 import org.koin.androidx.compose.getViewModel
 
 
+@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 internal fun MainScreen(
     appState: AppState,
@@ -38,6 +43,23 @@ internal fun MainScreen(
         val state by viewModel.state.collectAsState()
 
         val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = false)
+
+        val locationPermissionState =
+            rememberMultiplePermissionsState(
+                permissions =
+                listOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                ))
+
+        LaunchedEffect(key1 = null) {
+            when {
+                locationPermissionState.shouldShowRationale ->
+                    // TODO: mostrar dialog pidiendo que active localización
+                    Unit
+                else -> locationPermissionState.launchMultiplePermissionRequest()
+            }
+        }
 
         SwipeRefresh(
             modifier = Modifier.fillMaxSize(),

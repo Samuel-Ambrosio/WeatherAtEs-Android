@@ -21,10 +21,7 @@ fun NavGraphBuilder.homeNavigation(appState: AppState) {
         startDestination = HomeDestination.Main.route,
         route = Feature.Home.rootRoute
     ) {
-        composable(
-            route = HomeDestination.Main.route,
-
-        ) {
+        composable(route = HomeDestination.Main.route) {
             MainScreen(
                 appState = appState,
                 onHourlyWeatherClick = { position ->
