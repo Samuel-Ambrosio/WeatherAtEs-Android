@@ -9,11 +9,13 @@ val detailsFeatureModule = module {
     viewModel { params ->
         HourlyWeatherDetailsViewModel(
             isSearch = params.get(),
-            getWeatherUseCase = get())
+            getWeatherUseCase = get(),
+            getSearchedWeatherUseCase = get())
     }
     viewModel { params ->
         DailyWeatherDetailsViewModel(
             isSearch = params.get(),
-            getWeatherUseCase = get())
+            getWeatherUseCase = get(),
+            getSearchedWeatherUseCase = get())
     }
 }

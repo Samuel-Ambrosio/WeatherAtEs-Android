@@ -6,9 +6,11 @@ import com.google.gson.GsonBuilder
 import com.samuelav.data.remote.BuildConfig
 import com.samuelav.data.remote.BuildConfig.API_BASE_PATH
 import com.samuelav.data.remote.BuildConfig.API_KEY
+import com.samuelav.data.remote.search.SearchLocationRemoteDataSourceImpl
 import com.samuelav.data.remote.utils.ResultCallAdapterFactory
 import com.samuelav.data.remote.weather.WeatherRemoteDataSourceImpl
 import com.samuelav.data.remote.weather.WeatherWs
+import com.samuelav.data.source.search.SearchLocationRemoteDataSource
 import com.samuelav.data.source.weather.WeatherRemoteDataSource
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -25,6 +27,7 @@ val remoteModule = module {
     single { Geocoder(get()) }
     single { weatherWsProvider(get()) }
     single<WeatherRemoteDataSource> { WeatherRemoteDataSourceImpl(get(), get()) }
+    single<SearchLocationRemoteDataSource> { SearchLocationRemoteDataSourceImpl(get()) }
 }
 
 /**

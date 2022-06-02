@@ -12,4 +12,6 @@ object Modules {
     const val domain = ":domain"
     const val featuresHome = ":features:home"
     const val featuresDetails = ":features:details"
+    const val featuresSearch = ":features:search"
+    const val featuresSettings = ":features:settings"
 }

@@ -26,6 +26,8 @@ dependencies {
 
     implementation project(Modules.featuresHome)
     implementation project(Modules.featuresDetails)
+    implementation project(Modules.featuresSearch)
+    implementation project(Modules.featuresSettings)
 
     implementation Dependencies.AndroidX.splashScreen
 }

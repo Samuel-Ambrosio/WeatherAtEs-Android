@@ -11,6 +11,8 @@ import java.time.LocalDateTime
 
 interface WeatherRepository {
     suspend fun getWeather(refresh: Boolean): Result<Error, WeatherOneCallBO>
+    suspend fun searchWeather(lat: Double, lon: Double, refresh: Boolean): Result<Error, WeatherOneCallBO>
+    suspend fun getSearchedWeather(): Result<Error, WeatherOneCallBO>
 }
 
 class WeatherRepositoryImpl(
@@ -42,4 +44,37 @@ class WeatherRepositoryImpl(
                 weatherLocalDataSource.saveWeatherInfo(weatherInfo = dataFromRemote)
             }
         }.execute()
+
+    override suspend fun searchWeather(
+        lat: Double,
+        lon: Double,
+        refresh: Boolean
+    ): Result<Error, WeatherOneCallBO> =
+        object : CacheRepositoryResponse<WeatherOneCallBO>() {
+            override fun shouldFetchFromRemote(dataFromLocal: WeatherOneCallBO?): Boolean =
+                refresh || dataFromLocal == null
+
+            override suspend fun loadFromLocal(): WeatherOneCallBO? =
+                weatherLocalDataSource.getSearchedWeatherInfo()
+
+            override suspend fun loadFromRemote(): Result<Error, WeatherOneCallBO> =
+                weatherRemoteDataSource.getWeather(
+                    lat = lat,
+                    lon = lon,
+                    units = "metric",
+                    lang = "es")
+
+            override suspend fun saveRemoteResult(dataFromRemote: WeatherOneCallBO) {
+                weatherLocalDataSource.saveSearchedWeatherInfo(weatherInfo = dataFromRemote)
+            }
+        }.execute()
+
+    override suspend fun getSearchedWeather(): Result<Error, WeatherOneCallBO> {
+        val searchedWeatherInfo = weatherLocalDataSource.getSearchedWeatherInfo()
+        return if (searchedWeatherInfo == null) {
+            Result.Failure(Error.NotFound)
+        } else {
+            Result.Success(searchedWeatherInfo)
+        }
+    }
 }

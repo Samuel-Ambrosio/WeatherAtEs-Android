@@ -11,6 +11,14 @@ class WeatherLocalDataSourceImpl(private val weatherDao: WeatherDao): WeatherLoc
         weatherDao.save(weatherInfo = weatherInfo.toDBO())
     }
 
+    override suspend fun saveSearchedWeatherInfo(weatherInfo: WeatherOneCallBO) {
+        weatherDao.deleteAllExceptFirst()
+        weatherDao.save(weatherInfo = weatherInfo.toDBO())
+    }
+
     override suspend fun getWeatherInfo(): WeatherOneCallBO? =
-        weatherDao.getWeatherInfo()?.toBO()
+        weatherDao.getWeatherInfo()?.firstOrNull()?.toBO()
+
+    override suspend fun getSearchedWeatherInfo(): WeatherOneCallBO? =
+        weatherDao.getWeatherInfo()?.getOrNull(1)?.toBO()
 }

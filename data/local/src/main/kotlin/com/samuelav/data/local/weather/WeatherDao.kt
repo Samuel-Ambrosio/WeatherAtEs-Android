@@ -14,6 +14,9 @@ interface WeatherDao {
     @Query("DELETE FROM WeatherOneCallDBO")
     suspend fun deleteAll()
 
+    @Query("DELETE FROM WeatherOneCallDBO WHERE id NOT IN (SELECT id FROM WeatherOneCallDBO LIMIT 1)")
+    suspend fun deleteAllExceptFirst()
+
     @Query("SELECT * FROM WeatherOneCallDBO")
-    suspend fun getWeatherInfo(): WeatherOneCallDBO?
+    suspend fun getWeatherInfo(): List<WeatherOneCallDBO>?
 }

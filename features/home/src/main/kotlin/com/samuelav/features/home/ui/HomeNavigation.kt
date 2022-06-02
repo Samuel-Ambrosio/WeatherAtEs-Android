@@ -9,6 +9,8 @@ import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.navigation
 import com.samuelav.commonandroid.app.AppState
 import com.samuelav.commonandroid.app.navigation.Feature
+import com.samuelav.commonandroid.extensions.slideIn
+import com.samuelav.commonandroid.extensions.slideOutPop
 import com.samuelav.feature.details.ui.daily.DailyWeatherDetails
 import com.samuelav.feature.details.ui.hourly.HourlyWeatherDetails
 import com.samuelav.features.home.ui.HomeDestination.Companion.ARG_POSITION
@@ -19,7 +21,10 @@ fun NavGraphBuilder.homeNavigation(appState: AppState) {
         startDestination = HomeDestination.Main.route,
         route = Feature.Home.rootRoute
     ) {
-        composable(route = HomeDestination.Main.route) {
+        composable(
+            route = HomeDestination.Main.route,
+
+        ) {
             MainScreen(
                 appState = appState,
                 onHourlyWeatherClick = { position ->
@@ -35,7 +40,9 @@ fun NavGraphBuilder.homeNavigation(appState: AppState) {
 
         composable(
             route = HomeDestination.HourlyDetails.route,
-            arguments = HomeDestination.HourlyDetails.arguments
+            arguments = HomeDestination.HourlyDetails.arguments,
+            enterTransition = { slideIn },
+            popExitTransition = { slideOutPop },
         ) {
             val initialPage =
                 appState.navController.currentBackStackEntry?.arguments?.getInt(ARG_POSITION) ?: 0
@@ -50,7 +57,9 @@ fun NavGraphBuilder.homeNavigation(appState: AppState) {
 
         composable(
             route = HomeDestination.DailyDetails.route,
-            arguments = HomeDestination.DailyDetails.arguments
+            arguments = HomeDestination.DailyDetails.arguments,
+            enterTransition = { slideIn },
+            popExitTransition = { slideOutPop },
         ) {
             val initialPage =
                 appState.navController.currentBackStackEntry?.arguments?.getInt(ARG_POSITION) ?: 0
@@ -66,11 +75,12 @@ fun NavGraphBuilder.homeNavigation(appState: AppState) {
 }
 
 private sealed class HomeDestination(
+    val rootRoute: String = Feature.Home.rootRoute,
     val childRoute: String,
     val arguments: List<NamedNavArgument> = emptyList()
 ) {
     fun createRoute(args: List<Any> = emptyList()) =
-        listOf(Feature.Home.rootRoute)
+        listOf(rootRoute)
             .asSequence()
             .plus(childRoute)
             .plus(args)
@@ -79,7 +89,7 @@ private sealed class HomeDestination(
             .joinToString("/")
 
     val route =
-        listOf(Feature.Home.rootRoute)
+        listOf(rootRoute)
             .asSequence()
             .plus(childRoute)
             .plus(arguments.map { "{${it.name}}" })
