@@ -7,9 +7,9 @@ import com.samuelav.data.repository.weather.WeatherRepository
 
 class GetWeatherUseCase(private val weatherRepository: WeatherRepository) {
     suspend operator fun invoke(
-        lat: Double?,
-        lon: Double?,
-        refresh: Boolean
+        lat: Double? = null,
+        lon: Double? = null,
+        refresh: Boolean = false,
     ): Result<Error, WeatherOneCallBO> =
         weatherRepository.getWeather(lat = lat, lon = lon, refresh = refresh)
 }

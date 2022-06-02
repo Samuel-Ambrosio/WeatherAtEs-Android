@@ -24,7 +24,7 @@ internal class HourlyWeatherDetailsViewModel(
                     }
                 )
             } else {
-                getWeatherUseCase(refresh = false).fold(
+                getWeatherUseCase().fold(
                     isLoading = { emitState(HourlyWeatherDetailsState.Loading) },
                     isSuccess = { emitState(HourlyWeatherDetailsState.Success(weatherInfo = it)) },
                     isFailure = {

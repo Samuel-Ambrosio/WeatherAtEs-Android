@@ -18,7 +18,7 @@ class LocationRepositoryImpl(
 ): LocationRepository {
     @SuppressLint("MissingPermission")
     override fun getLastKnownLocation(): Coordinate? =
-        if (hasLocationPermissions()) {
+        if (areLocationPermissionsEnabled()) {
             val gpsLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
             val networkLocation =
                 locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
@@ -31,7 +31,7 @@ class LocationRepositoryImpl(
             null
         }
 
-    private fun hasLocationPermissions(): Boolean =
+    private fun areLocationPermissionsEnabled(): Boolean =
         arrayOf(
             Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.ACCESS_FINE_LOCATION)
