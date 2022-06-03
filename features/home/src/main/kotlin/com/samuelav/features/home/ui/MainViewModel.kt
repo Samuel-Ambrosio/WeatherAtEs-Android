@@ -4,8 +4,8 @@ import androidx.lifecycle.viewModelScope
 import com.samuelav.common.utils.fold
 import com.samuelav.commonandroid.ui.base.BaseViewModel
 import com.samuelav.data.model.weather.WeatherOneCallBO
+import com.samuelav.domain.location.GetLastKnownLocationUseCase
 import com.samuelav.domain.weather.GetWeatherUseCase
-import com.samuelav.features.home.domain.GetLastKnownLocationUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -13,10 +13,6 @@ internal class MainViewModel(
     private val getWeatherUseCase: GetWeatherUseCase,
     private val getLastKnownLocationUseCase: GetLastKnownLocationUseCase
 ): BaseViewModel<MainState, Unit>(MainState()) {
-
-    init {
-        fetchWeatherInfo()
-    }
 
     fun fetchWeatherInfo(refresh: Boolean = false) {
         viewModelScope.launch(Dispatchers.IO) {

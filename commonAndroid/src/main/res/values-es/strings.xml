@@ -28,6 +28,10 @@
     <string name="setting_changes_help">Los cambios se aplicarán automáticamente cuando se realice una actualización de los datos</string>
     <string name="data_provider_text">Datos meteorológicos proporcionados por [OpenWeather](https://openweathermap.org)</string>
     <string name="developed_by_text">Desarrollado por Samuel A.V. para [MIMO UPSA](https://web.upsa.es/mimo/)</string>
+    <string name="activate_location_rationale_title">Activar ubicación</string>
+    <string name="activate_location_rationale_description">Su ubicación nos deja mostrarte el tiempo meteorológico actual donde se encuentra. Solo utilizaremos la última ubicación conocida.</string>
+    <string name="activate_location_rationale_confirm">Activar</string>
+    <string name="activate_location_rationale_cancel">Cancelar</string>
     <string name="weather_detail_title">Información detallada</string>
     <string name="weather_north">Norte</string>
     <string name="weather_north_east">Noreste</string>

@@ -1,5 +1,6 @@
 package com.samuelav.domain.di
 
+import com.samuelav.domain.location.GetLastKnownLocationUseCase
 import com.samuelav.domain.search.SearchLocationUseCase
 import com.samuelav.domain.weather.GetSearchedWeatherUseCase
 import com.samuelav.domain.weather.GetWeatherUseCase
@@ -11,4 +12,5 @@ val domainModule = module {
     single { SearchWeatherUseCase(get()) }
     single { SearchLocationUseCase(get()) }
     single { GetSearchedWeatherUseCase(get()) }
+    single { GetLastKnownLocationUseCase(get()) }
 }

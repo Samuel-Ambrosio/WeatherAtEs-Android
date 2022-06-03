@@ -1,4 +1,4 @@
-package com.samuelav.commonandroid.utils
+package com.samuelav.data.remote.location
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -7,15 +7,13 @@ import android.content.pm.PackageManager
 import android.location.LocationManager
 import androidx.core.content.ContextCompat
 import com.samuelav.data.model.location.Coordinate
+import com.samuelav.data.source.location.LocationDataSource
 
-interface LocationRepository {
-    fun getLastKnownLocation(): Coordinate?
-}
-
-class LocationRepositoryImpl(
+class LocationDataSourceImpl(
     private val context: Context,
-    private val locationManager: LocationManager,
-): LocationRepository {
+    private val locationManager: LocationManager
+): LocationDataSource  {
+
     @SuppressLint("MissingPermission")
     override fun getLastKnownLocation(): Coordinate? =
         if (areLocationPermissionsEnabled()) {

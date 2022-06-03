@@ -28,6 +28,10 @@
     <string name="setting_changes_help">The changes will be applied automatically when a data update is made</string>
     <string name="data_provider_text">Weather data provided by [OpenWeather](https://openweathermap.org)</string>
     <string name="developed_by_text">Developed by Samuel A.V. for [MIMO UPSA](https://web.upsa.es/mimo/)</string>
+    <string name="activate_location_rationale_title">Activate location</string>
+    <string name="activate_location_rationale_description">Your location lets us show you the current weather where you are. We will only use the last known location.</string>
+    <string name="activate_location_rationale_confirm">Activate</string>
+    <string name="activate_location_rationale_cancel">Cancel</string>
     <string name="weather_detail_title">Detailed information</string>
     <string name="weather_north">North</string>
     <string name="weather_north_east">North East</string>

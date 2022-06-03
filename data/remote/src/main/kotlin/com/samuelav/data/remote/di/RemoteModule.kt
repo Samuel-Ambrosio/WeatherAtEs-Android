@@ -1,20 +1,25 @@
 package com.samuelav.data.remote.di
 
+import android.content.Context
 import android.location.Geocoder
+import android.location.LocationManager
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.samuelav.data.remote.BuildConfig
 import com.samuelav.data.remote.BuildConfig.API_BASE_PATH
 import com.samuelav.data.remote.BuildConfig.API_KEY
+import com.samuelav.data.remote.location.LocationDataSourceImpl
 import com.samuelav.data.remote.search.SearchLocationRemoteDataSourceImpl
 import com.samuelav.data.remote.utils.ResultCallAdapterFactory
 import com.samuelav.data.remote.weather.WeatherRemoteDataSourceImpl
 import com.samuelav.data.remote.weather.WeatherWs
+import com.samuelav.data.source.location.LocationDataSource
 import com.samuelav.data.source.search.SearchLocationRemoteDataSource
 import com.samuelav.data.source.weather.WeatherRemoteDataSource
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -25,6 +30,8 @@ val remoteModule = module {
     single { gsonProvider() }
     single { retrofitProvider(get(), get()) }
     single { Geocoder(get()) }
+    single { androidApplication().getSystemService(Context.LOCATION_SERVICE) as LocationManager }
+    single<LocationDataSource> { LocationDataSourceImpl(get(), get()) }
     single { weatherWsProvider(get()) }
     single<WeatherRemoteDataSource> { WeatherRemoteDataSourceImpl(get(), get()) }
     single<SearchLocationRemoteDataSource> { SearchLocationRemoteDataSourceImpl(get()) }

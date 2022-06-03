@@ -1,6 +1,6 @@
-package com.samuelav.features.home.domain
+package com.samuelav.domain.location
 
-import com.samuelav.commonandroid.utils.LocationRepository
+import com.samuelav.data.repository.location.LocationRepository
 
 class GetLastKnownLocationUseCase(private val locationRepository: LocationRepository) {
     operator fun invoke() = locationRepository.getLastKnownLocation()
