@@ -24,11 +24,13 @@ import com.samuelav.commonandroid.ui.composables.base.BodyMediumRegular
 import com.samuelav.commonandroid.ui.theme.AppTheme.colors
 import com.samuelav.commonandroid.ui.theme.AppTheme.spacing
 import com.samuelav.data.model.weather.HourlyWeatherBO
+import com.samuelav.data.model.weather.WeatherUnit
 
 @Composable
 fun HourlyWeather(
     modifier: Modifier = Modifier,
     isLoading: Boolean,
+    weatherUnit: WeatherUnit,
     hourlyWeather: List<HourlyWeatherBO>,
     onHourlyWeatherClick: (Int) -> Unit,
 ) {
@@ -48,9 +50,10 @@ fun HourlyWeather(
             horizontalArrangement = Arrangement.spacedBy(spacing.xs)
         ) {
             items(hourlyWeather, key = { it.dateTime }) { hourly ->
-                HourlyWeatherItem(hourlyWeather = hourly, onClick = {
-                    onHourlyWeatherClick(hourlyWeather.indexOf(it))
-                })
+                HourlyWeatherItem(
+                    weatherUnit = weatherUnit,
+                    hourlyWeather = hourly,
+                    onClick = { onHourlyWeatherClick(hourlyWeather.indexOf(it)) })
             }
         }
     }
@@ -59,6 +62,7 @@ fun HourlyWeather(
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun HourlyWeatherItem(
+    weatherUnit: WeatherUnit,
     hourlyWeather: HourlyWeatherBO,
     onClick: (HourlyWeatherBO) -> Unit
 ) {
@@ -77,7 +81,8 @@ private fun HourlyWeatherItem(
                 painter = hourlyWeather.state.icon().painter,
                 contentDescription = null
             )
-            BodyMediumBold(text = hourlyWeather.temp.toInt().toString() + " ºC") //TODO
+            BodyMediumBold(
+                text = hourlyWeather.temp.toInt().toString() + " " + weatherUnit.temperatureUnit)
             BodyMediumRegular(text = hourlyWeather.dateTime.format("HH:mm"))
         }
     }

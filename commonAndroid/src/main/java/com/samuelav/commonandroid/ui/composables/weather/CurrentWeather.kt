@@ -22,12 +22,14 @@ import com.samuelav.commonandroid.ui.theme.AppTheme.colors
 import com.samuelav.commonandroid.ui.theme.AppTheme.icons
 import com.samuelav.commonandroid.ui.theme.AppTheme.spacing
 import com.samuelav.data.model.weather.CurrentWeatherBO
+import com.samuelav.data.model.weather.WeatherUnit
 
 @Composable
 fun CurrentWeather(
     modifier: Modifier = Modifier,
     isLoading: Boolean,
     location: String,
+    weatherUnit: WeatherUnit,
     currentWeather: CurrentWeatherBO?
 ) {
     Card(
@@ -53,7 +55,7 @@ fun CurrentWeather(
                     contentDescription = null)
                 Column {
                     BodyLargeRegular(
-                        text = (currentWeather?.temp?.toInt()?.toString() ?: "") + " ºC", //TODO
+                        text = (currentWeather?.temp?.toInt()?.toString() ?: "") + " " + weatherUnit.temperatureUnit,
                         color = colors.onPrimary)
                     BodyLargeBold(text = location, color = colors.onPrimary)
                 }

@@ -8,5 +8,6 @@ data class WeatherOneCallBO(
     val timeZoneOffset: Int,
     val current: CurrentWeatherBO,
     val hourly: List<HourlyWeatherBO>,
-    val daily: List<DailyWeatherBO>
+    val daily: List<DailyWeatherBO>,
+    var weatherUnit: WeatherUnit = WeatherUnit.Metric,
 )

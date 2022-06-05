@@ -32,6 +32,7 @@ import com.samuelav.commonandroid.ui.theme.AppTheme.colors
 import com.samuelav.commonandroid.ui.theme.AppTheme.icons
 import com.samuelav.commonandroid.ui.theme.AppTheme.spacing
 import com.samuelav.data.model.weather.WeatherOneCallBO
+import com.samuelav.data.model.weather.WeatherUnit
 import com.samuelav.features.home.R
 import org.koin.androidx.compose.getViewModel
 
@@ -86,17 +87,20 @@ private fun MainScreenContent(
         CurrentWeather(
             isLoading = isLoading,
             location = weatherInfo?.location ?: "",
+            weatherUnit = weatherInfo?.weatherUnit ?: WeatherUnit.Metric,
             currentWeather = weatherInfo?.current)
 
         HourlyWeather(
             modifier = Modifier.fillMaxWidth().padding(top = spacing.s),
             isLoading = isLoading,
+            weatherUnit = weatherInfo?.weatherUnit ?: WeatherUnit.Metric,
             hourlyWeather = weatherInfo?.hourly ?: emptyList(),
             onHourlyWeatherClick = onHourlyWeatherClick)
 
         DailyWeather(
             modifier = Modifier.fillMaxWidth().padding(top = spacing.s),
             isLoading = isLoading,
+            weatherUnit = weatherInfo?.weatherUnit ?: WeatherUnit.Metric,
             dailyWeather = weatherInfo?.daily ?: emptyList(),
             onDailyWeatherClick = onDailyWeatherClick)
     }
@@ -114,6 +118,7 @@ private fun LocationPermissionManagement(
         ))
     var showLocationRationaleDialog by rememberSaveable { mutableStateOf(false) }
     var permissionsRequestLaunched by rememberSaveable { mutableStateOf(false) }
+    var weatherFetched by rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(
         key1 = locationPermissionState.permissions[0].status,
@@ -121,7 +126,10 @@ private fun LocationPermissionManagement(
     ) {
         when {
             locationPermissionState.allPermissionsGranted -> {
-                onFetchWeatherInfo(permissionsRequestLaunched)
+                if (!weatherFetched) {
+                    onFetchWeatherInfo(permissionsRequestLaunched)
+                    weatherFetched = true
+                }
             }
             locationPermissionState.shouldShowRationale -> showLocationRationaleDialog = true
             else -> {

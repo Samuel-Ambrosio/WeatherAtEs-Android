@@ -16,6 +16,7 @@ import com.samuelav.commonandroid.ui.composables.weather.CurrentWeather
 import com.samuelav.commonandroid.ui.composables.weather.DailyWeather
 import com.samuelav.commonandroid.ui.composables.weather.HourlyWeather
 import com.samuelav.commonandroid.ui.theme.AppTheme
+import com.samuelav.data.model.weather.WeatherUnit
 import com.samuelav.features.search.R
 import org.koin.androidx.compose.getViewModel
 import org.koin.core.parameter.parametersOf
@@ -45,17 +46,20 @@ internal fun SearchedLocationScreen(
             CurrentWeather(
                 isLoading = state.isLoading,
                 location = state.weatherInfo?.location ?: "",
+                weatherUnit = state.weatherInfo?.weatherUnit ?: WeatherUnit.Metric,
                 currentWeather = state.weatherInfo?.current)
 
             HourlyWeather(
                 modifier = Modifier.fillMaxWidth().padding(top = AppTheme.spacing.s),
                 isLoading = state.isLoading,
+                weatherUnit = state.weatherInfo?.weatherUnit ?: WeatherUnit.Metric,
                 hourlyWeather = state.weatherInfo?.hourly ?: emptyList(),
                 onHourlyWeatherClick = onHourlyWeatherClick)
 
             DailyWeather(
                 modifier = Modifier.fillMaxWidth().padding(top = AppTheme.spacing.s),
                 isLoading = state.isLoading,
+                weatherUnit = state.weatherInfo?.weatherUnit ?: WeatherUnit.Metric,
                 dailyWeather = state.weatherInfo?.daily ?: emptyList(),
                 onDailyWeatherClick = onDailyWeatherClick)
         }

@@ -32,8 +32,9 @@ import com.samuelav.commonandroid.ui.theme.AppTheme.colors
 import com.samuelav.commonandroid.ui.theme.AppTheme.icons
 import com.samuelav.commonandroid.ui.theme.AppTheme.spacing
 import com.samuelav.data.model.weather.HourlyWeatherBO
+import com.samuelav.data.model.weather.WeatherUnit
 import com.samuelav.feature.details.R
-import com.samuelav.feature.details.WeatherElement
+import com.samuelav.feature.details.ui.WeatherElement
 import org.koin.androidx.compose.getViewModel
 import org.koin.core.parameter.parametersOf
 
@@ -69,6 +70,7 @@ fun HourlyWeatherDetails(
 
                     HourlyWeatherDetailsContent(
                         location = weatherInfo.location,
+                        weatherUnit = weatherInfo.weatherUnit,
                         hourlyWeather = weatherInfo.hourly[currentPage])
                 }
             }
@@ -80,6 +82,7 @@ fun HourlyWeatherDetails(
 private fun HourlyWeatherDetailsContent(
     modifier: Modifier = Modifier,
     location: String,
+    weatherUnit: WeatherUnit,
     hourlyWeather: HourlyWeatherBO
 ) {
     LazyVerticalGrid(
@@ -89,6 +92,7 @@ private fun HourlyWeatherDetailsContent(
         item(span = { GridItemSpan(Int.MAX_VALUE) }) {
             HourlyWeatherDetailsHeader(
                 location = location,
+                weatherUnit = weatherUnit,
                 hourlyWeather = hourlyWeather)
         }
 
@@ -100,7 +104,9 @@ private fun HourlyWeatherDetailsContent(
             )
         }
 
-        weatherElements(hourlyWeather = hourlyWeather)
+        weatherElements(
+            weatherUnit = weatherUnit,
+            hourlyWeather = hourlyWeather)
     }
 }
 
@@ -108,6 +114,7 @@ private fun HourlyWeatherDetailsContent(
 private fun HourlyWeatherDetailsHeader(
     modifier: Modifier = Modifier,
     location: String,
+    weatherUnit: WeatherUnit,
     hourlyWeather: HourlyWeatherBO
 ) {
     Card(
@@ -125,7 +132,7 @@ private fun HourlyWeatherDetailsHeader(
                 contentDescription = null)
 
             BodyLargeRegular(
-                text = (hourlyWeather.temp.toInt().toString()) + " ºC", //TODO
+                text = (hourlyWeather.temp.toInt().toString()) + " " + weatherUnit.temperatureUnit,
                 color = colors.onPrimary)
 
             BodyLargeBold(text = location, color = colors.onPrimary)
@@ -134,13 +141,14 @@ private fun HourlyWeatherDetailsHeader(
 }
 
 private fun LazyGridScope.weatherElements(
+    weatherUnit: WeatherUnit,
     hourlyWeather: HourlyWeatherBO
 ) {
     item {
         WeatherElement(
             modifier = Modifier.padding(spacing.xs),
             icon = icons.temperature,
-            value = hourlyWeather.feelsLike.toInt().toString() + " ºC",   //TODO
+            value = hourlyWeather.feelsLike.toInt().toString() + " " + weatherUnit.temperatureUnit,
             type = stringResource(R.string.weather_feels_like),
         )
     }
@@ -172,7 +180,7 @@ private fun LazyGridScope.weatherElements(
         WeatherElement(
             modifier = Modifier.padding(spacing.xs),
             icon = icons.wind,
-            value = hourlyWeather.windSpeed.toString() + " m/s",     //TODO
+            value = hourlyWeather.windSpeed.toString() + " " + weatherUnit.windUnit,
             type = stringResource(R.string.weather_wind),
         )
     }
@@ -180,7 +188,7 @@ private fun LazyGridScope.weatherElements(
         WeatherElement(
             modifier = Modifier.padding(spacing.xs),
             icon = icons.wind,
-            value = hourlyWeather.windGust.toString() + " m/s",      //TODO
+            value = hourlyWeather.windGust.toString() + " " + weatherUnit.windUnit,
             type = stringResource(R.string.weather_wind_gust),
         )
     }

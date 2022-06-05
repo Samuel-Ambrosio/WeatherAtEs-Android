@@ -1,4 +1,4 @@
-package com.samuelav.feature.details
+package com.samuelav.feature.details.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column

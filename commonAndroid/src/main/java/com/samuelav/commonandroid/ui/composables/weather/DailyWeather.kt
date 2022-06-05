@@ -25,11 +25,13 @@ import com.samuelav.commonandroid.ui.theme.AppTheme.colors
 import com.samuelav.commonandroid.ui.theme.AppTheme.icons
 import com.samuelav.commonandroid.ui.theme.AppTheme.spacing
 import com.samuelav.data.model.weather.DailyWeatherBO
+import com.samuelav.data.model.weather.WeatherUnit
 
 @Composable
 fun DailyWeather(
     modifier: Modifier = Modifier,
     isLoading: Boolean,
+    weatherUnit: WeatherUnit,
     dailyWeather: List<DailyWeatherBO>,
     onDailyWeatherClick: (Int) -> Unit,
 ) {
@@ -47,9 +49,10 @@ fun DailyWeather(
             modifier = Modifier.padding(bottom = spacing.xs),
             verticalArrangement = Arrangement.spacedBy(spacing.xs)) {
             dailyWeather.forEach { daily ->
-                DailyWeatherItem(dailyWeather = daily, onClick = {
-                    onDailyWeatherClick(dailyWeather.indexOf(it))
-                })
+                DailyWeatherItem(
+                    weatherUnit = weatherUnit,
+                    dailyWeather = daily,
+                    onClick = { onDailyWeatherClick(dailyWeather.indexOf(it)) })
             }
         }
     }
@@ -58,6 +61,7 @@ fun DailyWeather(
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun DailyWeatherItem(
+    weatherUnit: WeatherUnit,
     dailyWeather: DailyWeatherBO,
     onClick: (DailyWeatherBO) -> Unit
 ) {
@@ -90,7 +94,8 @@ private fun DailyWeatherItem(
                 }
             }
             Row {
-                BodyMediumBold(text = dailyWeather.temp.day.toInt().toString() + " ºC") //TODO
+                BodyMediumBold(
+                    text = dailyWeather.temp.day.toInt().toString() + " " + weatherUnit.temperatureUnit)
                 Icon(
                     painter = icons.chevronRight.painter,
                     contentDescription = null,

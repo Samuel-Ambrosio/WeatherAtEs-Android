@@ -30,8 +30,9 @@ import com.samuelav.commonandroid.ui.theme.AppTheme.colors
 import com.samuelav.commonandroid.ui.theme.AppTheme.icons
 import com.samuelav.commonandroid.ui.theme.AppTheme.spacing
 import com.samuelav.data.model.weather.DailyWeatherBO
+import com.samuelav.data.model.weather.WeatherUnit
 import com.samuelav.feature.details.R
-import com.samuelav.feature.details.WeatherElement
+import com.samuelav.feature.details.ui.WeatherElement
 import org.koin.androidx.compose.getViewModel
 import org.koin.core.parameter.parametersOf
 
@@ -67,6 +68,7 @@ fun DailyWeatherDetails(
 
                     DailyWeatherDetailsContent(
                         location = weatherInfo.location,
+                        weatherUnit = weatherInfo.weatherUnit,
                         dailyWeather = weatherInfo.daily[currentPage]
                     )
                 }
@@ -79,6 +81,7 @@ fun DailyWeatherDetails(
 private fun DailyWeatherDetailsContent(
     modifier: Modifier = Modifier,
     location: String,
+    weatherUnit: WeatherUnit,
     dailyWeather: DailyWeatherBO
 ) {
     LazyVerticalGrid(
@@ -88,6 +91,7 @@ private fun DailyWeatherDetailsContent(
         item(span = { GridItemSpan(Int.MAX_VALUE) }) {
             DailyWeatherDetailsHeader(
                 location = location,
+                weatherUnit = weatherUnit,
                 dailyWeather = dailyWeather)
         }
 
@@ -99,7 +103,9 @@ private fun DailyWeatherDetailsContent(
             )
         }
 
-        weatherElements(dailyWeather = dailyWeather)
+        weatherElements(
+            weatherUnit = weatherUnit,
+            dailyWeather = dailyWeather)
     }
 }
 
@@ -107,6 +113,7 @@ private fun DailyWeatherDetailsContent(
 private fun DailyWeatherDetailsHeader(
     modifier: Modifier = Modifier,
     location: String,
+    weatherUnit: WeatherUnit,
     dailyWeather: DailyWeatherBO
 ) {
     Card(
@@ -124,17 +131,17 @@ private fun DailyWeatherDetailsHeader(
                 contentDescription = null)
 
             BodyLargeRegular(
-                text = (dailyWeather.temp.day.toInt().toString()) + " ºC", //TODO
+                text = (dailyWeather.temp.day.toInt().toString()) + " " + weatherUnit.temperatureUnit,
                 color = colors.onPrimary)
             Row(
                 horizontalArrangement = Arrangement.spacedBy(spacing.xs),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 BodySmallRegular(
-                    text = stringResource(id = R.string.weather_min_temp) + ": " + dailyWeather.temp.min.toInt().toString() + " ºC", //TODO
+                    text = stringResource(id = R.string.weather_min_temp) + ": " + dailyWeather.temp.min.toInt().toString() + " " + weatherUnit.temperatureUnit,
                     color = colors.onPrimary)
                 BodySmallRegular(
-                    text = stringResource(id = R.string.weather_max_temp) + ": " + dailyWeather.temp.max.toInt().toString() + " ºC", //TODO
+                    text = stringResource(id = R.string.weather_max_temp) + ": " + dailyWeather.temp.max.toInt().toString() + " " + weatherUnit.temperatureUnit,
                     color = colors.onPrimary)
             }
 
@@ -147,6 +154,7 @@ private fun DailyWeatherDetailsHeader(
 }
 
 private fun LazyGridScope.weatherElements(
+    weatherUnit: WeatherUnit,
     dailyWeather: DailyWeatherBO
 ) {
     item {
@@ -169,7 +177,7 @@ private fun LazyGridScope.weatherElements(
         WeatherElement(
             modifier = Modifier.padding(spacing.xs),
             icon = icons.temperature,
-            value = dailyWeather.feelsLike.day.toInt().toString() + " ºC",   //TODO
+            value = dailyWeather.feelsLike.day.toInt().toString() + " " + weatherUnit.temperatureUnit,
             type = stringResource(R.string.weather_feels_like),
         )
     }
@@ -201,7 +209,7 @@ private fun LazyGridScope.weatherElements(
         WeatherElement(
             modifier = Modifier.padding(spacing.xs),
             icon = icons.wind,
-            value = dailyWeather.windSpeed.toString() + " m/s",     //TODO
+            value = dailyWeather.windSpeed.toString() + " " + weatherUnit.windUnit,
             type = stringResource(R.string.weather_wind),
         )
     }
@@ -209,7 +217,7 @@ private fun LazyGridScope.weatherElements(
         WeatherElement(
             modifier = Modifier.padding(spacing.xs),
             icon = icons.wind,
-            value = dailyWeather.windGust.toString() + " m/s",      //TODO
+            value = dailyWeather.windGust.toString() + " " + weatherUnit.windUnit,
             type = stringResource(R.string.weather_wind_gust),
         )
     }

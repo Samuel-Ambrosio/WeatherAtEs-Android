@@ -3,6 +3,7 @@ package com.samuelav.data.local.weather.dbo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.samuelav.data.model.weather.WeatherOneCallBO
+import com.samuelav.data.model.weather.toWeatherUnit
 
 @Entity
 data class WeatherOneCallDBO(
@@ -15,7 +16,8 @@ data class WeatherOneCallDBO(
     val timeZoneOffset: Int,
     val current: CurrentWeatherDBO,
     val hourly: List<HourlyWeatherDBO>,
-    val daily: List<DailyWeatherDBO>
+    val daily: List<DailyWeatherDBO>,
+    val weatherUnit: String,
 )
 
 internal fun WeatherOneCallBO.toDBO() =
@@ -27,7 +29,8 @@ internal fun WeatherOneCallBO.toDBO() =
         timeZoneOffset = timeZoneOffset,
         current = current.toDBO(),
         hourly = hourly.map { it.toDBO() },
-        daily = daily.map { it.toDBO() }
+        daily = daily.map { it.toDBO() },
+        weatherUnit = weatherUnit.system
     )
 
 internal fun WeatherOneCallDBO.toBO() =
@@ -39,5 +42,6 @@ internal fun WeatherOneCallDBO.toBO() =
         timeZoneOffset = timeZoneOffset,
         current = current.toBO(),
         hourly = hourly.map { it.toBO() },
-        daily = daily.map { it.toBO() }
+        daily = daily.map { it.toBO() },
+        weatherUnit = weatherUnit.toWeatherUnit()
     )

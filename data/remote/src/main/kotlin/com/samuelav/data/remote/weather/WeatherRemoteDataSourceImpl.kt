@@ -7,6 +7,7 @@ import com.samuelav.common.utils.mapSuccess
 import com.samuelav.data.model.weather.WeatherOneCallBO
 import com.samuelav.data.remote.weather.dto.toBO
 import com.samuelav.data.source.weather.WeatherRemoteDataSource
+import java.util.*
 
 class WeatherRemoteDataSourceImpl(
     private val weatherWs: WeatherWs,
@@ -16,9 +17,8 @@ class WeatherRemoteDataSourceImpl(
         lat: Double,
         lon: Double,
         units: String,
-        lang: String
     ): Result<Error, WeatherOneCallBO> =
-        weatherWs.getWeatherOneCall(lat = lat, lon = lon, units = units, lang = lang)
+        weatherWs.getWeatherOneCall(lat = lat, lon = lon, units = units, lang = Locale.getDefault().language)
             .mapSuccess {
                 val address = geocoder.getFromLocation(lat, lon, 1).firstOrNull()
                 it.toBO(location = address?.locality ?: "")

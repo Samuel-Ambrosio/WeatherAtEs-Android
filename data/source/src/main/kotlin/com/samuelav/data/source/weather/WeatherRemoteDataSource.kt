@@ -9,6 +9,5 @@ interface WeatherRemoteDataSource {
         lat: Double,
         lon: Double,
         units: String,
-        lang: String
     ): Result<Error, WeatherOneCallBO>
 }
