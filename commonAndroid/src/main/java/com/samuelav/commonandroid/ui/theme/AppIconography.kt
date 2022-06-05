@@ -33,6 +33,13 @@ object AppIconography {
     val weatherStorm: Icon = Icon(resId = R.drawable.ic_weather_storm)
     val weatherSnow: Icon = Icon(resId = R.drawable.ic_weather_snow)
     val weatherFog: Icon = Icon(resId = R.drawable.ic_weather_fog)
+    val wind: Icon = Icon(resId = R.drawable.ic_wind)
+    val airPressure: Icon = Icon(resId = R.drawable.ic_air_pressure)
+    val temperature: Icon = Icon(resId = R.drawable.ic_temperature)
+    val cloudiness: Icon = Icon(resId = R.drawable.ic_cloudiness)
+    val humidity: Icon = Icon(resId = R.drawable.ic_humidity)
+    val sunriseSunset: Icon = Icon(resId = R.drawable.ic_sunrise_sunset)
+    val visibility: Icon = Icon(resId = R.drawable.ic_visibility)
 }
 
 data class Icon(@DrawableRes val resId: Int) {

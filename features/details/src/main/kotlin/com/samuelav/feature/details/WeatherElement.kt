@@ -8,10 +8,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme.shapes
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.samuelav.commonandroid.ui.composables.base.BodyMediumBold
-import com.samuelav.commonandroid.ui.composables.base.BodyMediumRegular
+import com.samuelav.commonandroid.ui.composables.base.BodySmallRegular
 import com.samuelav.commonandroid.ui.theme.AppTheme.colors
 import com.samuelav.commonandroid.ui.theme.AppTheme.spacing
 import com.samuelav.commonandroid.ui.theme.Icon
@@ -25,16 +26,18 @@ fun WeatherElement(
 ) {
     Row(
         modifier = modifier
-            .background(color = colors.surface, shape = shapes.small)
-            .padding(spacing.l)
+            .background(color = colors.surface, shape = shapes.large)
+            .padding(spacing.s),
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
-            modifier = Modifier.size(24.dp).padding(end = spacing.xs),
+            modifier = Modifier.size(48.dp).padding(end = spacing.xs),
             painter = icon.painter,
-            contentDescription = null)
+            contentDescription = null,
+            tint = colors.onSurface)
         Column {
             BodyMediumBold(text = value)
-            BodyMediumRegular(text = type)
+            BodySmallRegular(text = type)
         }
     }
 }

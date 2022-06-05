@@ -2,28 +2,36 @@ package com.samuelav.feature.details.ui.daily
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyGridScope
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.Card
 import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.MaterialTheme.shapes
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import com.samuelav.common.extensions.format
 import com.samuelav.commonandroid.app.AppState
+import com.samuelav.commonandroid.extensions.cardinalDirection
 import com.samuelav.commonandroid.extensions.icon
 import com.samuelav.commonandroid.ui.composables.base.BodyLargeBold
 import com.samuelav.commonandroid.ui.composables.base.BodyLargeRegular
+import com.samuelav.commonandroid.ui.composables.base.BodySmallRegular
 import com.samuelav.commonandroid.ui.composables.base.Screen
 import com.samuelav.commonandroid.ui.theme.AppTheme.colors
+import com.samuelav.commonandroid.ui.theme.AppTheme.icons
 import com.samuelav.commonandroid.ui.theme.AppTheme.spacing
 import com.samuelav.data.model.weather.DailyWeatherBO
-import com.samuelav.data.model.weather.WeatherOneCallBO
+import com.samuelav.feature.details.R
+import com.samuelav.feature.details.WeatherElement
 import org.koin.androidx.compose.getViewModel
 import org.koin.core.parameter.parametersOf
 
@@ -58,8 +66,8 @@ fun DailyWeatherDetails(
                         capitalize = true)
 
                     DailyWeatherDetailsContent(
-                        weatherInfo = weatherInfo,
-                        position = currentPage
+                        location = weatherInfo.location,
+                        dailyWeather = weatherInfo.daily[currentPage]
                     )
                 }
             }
@@ -69,16 +77,29 @@ fun DailyWeatherDetails(
 
 @Composable
 private fun DailyWeatherDetailsContent(
-    weatherInfo: WeatherOneCallBO,
-    position: Int
+    modifier: Modifier = Modifier,
+    location: String,
+    dailyWeather: DailyWeatherBO
 ) {
-    Column(
-        modifier = Modifier.padding(horizontal = spacing.s).verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.Top
+    LazyVerticalGrid(
+        modifier = modifier.fillMaxWidth().padding(horizontal = spacing.s),
+        columns = GridCells.Adaptive(140.dp)
     ) {
-        DailyWeatherDetailsHeader(
-            location = weatherInfo.location,
-            dailyWeather = weatherInfo.daily[position])
+        item(span = { GridItemSpan(Int.MAX_VALUE) }) {
+            DailyWeatherDetailsHeader(
+                location = location,
+                dailyWeather = dailyWeather)
+        }
+
+        item(span = { GridItemSpan(Int.MAX_VALUE) }) {
+            BodyLargeBold(
+                modifier = Modifier.fillMaxWidth().padding(vertical = spacing.m),
+                text = stringResource(id = R.string.weather_detail_title),
+                textAlign = TextAlign.Center
+            )
+        }
+
+        weatherElements(dailyWeather = dailyWeather)
     }
 }
 
@@ -105,8 +126,99 @@ private fun DailyWeatherDetailsHeader(
             BodyLargeRegular(
                 text = (dailyWeather.temp.day.toInt().toString()) + " ºC", //TODO
                 color = colors.onPrimary)
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(spacing.xs),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                BodySmallRegular(
+                    text = stringResource(id = R.string.weather_min_temp) + ": " + dailyWeather.temp.min.toInt().toString() + " ºC", //TODO
+                    color = colors.onPrimary)
+                BodySmallRegular(
+                    text = stringResource(id = R.string.weather_max_temp) + ": " + dailyWeather.temp.max.toInt().toString() + " ºC", //TODO
+                    color = colors.onPrimary)
+            }
 
-            BodyLargeBold(text = location, color = colors.onPrimary)
+            BodyLargeBold(
+                modifier = Modifier.padding(top = spacing.xs),
+                text = location,
+                color = colors.onPrimary)
         }
+    }
+}
+
+private fun LazyGridScope.weatherElements(
+    dailyWeather: DailyWeatherBO
+) {
+    item {
+        WeatherElement(
+            modifier = Modifier.padding(spacing.xs),
+            icon = icons.sunriseSunset,
+            value = dailyWeather.sunriseDateTime.format("HH:mm"),
+            type = stringResource(R.string.weather_sunrise),
+        )
+    }
+    item {
+        WeatherElement(
+            modifier = Modifier.padding(spacing.xs),
+            icon = icons.sunriseSunset,
+            value = dailyWeather.sunsetDateTime.format("HH:mm"),
+            type = stringResource(R.string.weather_sunset),
+        )
+    }
+    item {
+        WeatherElement(
+            modifier = Modifier.padding(spacing.xs),
+            icon = icons.temperature,
+            value = dailyWeather.feelsLike.day.toInt().toString() + " ºC",   //TODO
+            type = stringResource(R.string.weather_feels_like),
+        )
+    }
+    item {
+        WeatherElement(
+            modifier = Modifier.padding(spacing.xs),
+            icon = icons.airPressure,
+            value = dailyWeather.pressure.toString() + " hPa",
+            type = stringResource(R.string.weather_pressure),
+        )
+    }
+    item {
+        WeatherElement(
+            modifier = Modifier.padding(spacing.xs),
+            icon = icons.humidity,
+            value = dailyWeather.humidity.toString() + " %",
+            type = stringResource(R.string.weather_humidity),
+        )
+    }
+    item {
+        WeatherElement(
+            modifier = Modifier.padding(spacing.xs),
+            icon = icons.cloudiness,
+            value = dailyWeather.clouds.toString() + " %",
+            type = stringResource(R.string.weather_cloudiness),
+        )
+    }
+    item {
+        WeatherElement(
+            modifier = Modifier.padding(spacing.xs),
+            icon = icons.wind,
+            value = dailyWeather.windSpeed.toString() + " m/s",     //TODO
+            type = stringResource(R.string.weather_wind),
+        )
+    }
+    item {
+        WeatherElement(
+            modifier = Modifier.padding(spacing.xs),
+            icon = icons.wind,
+            value = dailyWeather.windGust.toString() + " m/s",      //TODO
+            type = stringResource(R.string.weather_wind_gust),
+        )
+    }
+    item {
+        WeatherElement(
+            modifier = Modifier.padding(spacing.xs),
+            icon = icons.wind,
+            value = dailyWeather.windDeg.cardinalDirection(),
+            type = stringResource(R.string.weather_wind_dir),
+        )
     }
 }

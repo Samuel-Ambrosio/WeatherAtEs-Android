@@ -1,6 +1,8 @@
 package com.samuelav.commonandroid.extensions
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import com.samuelav.commonandroid.R
 import com.samuelav.commonandroid.ui.theme.AppTheme.icons
 import com.samuelav.data.model.weather.WeatherStateBO
 
@@ -27,3 +29,19 @@ fun WeatherStateBO.icon() =
         "50n" -> icons.weatherFog
         else -> icons.weatherCloudy
     }
+
+@Composable
+fun Double.cardinalDirection(): String {
+    val directions = listOf(
+        R.string.weather_north,
+        R.string.weather_north_east,
+        R.string.weather_east,
+        R.string.weather_south_east,
+        R.string.weather_south,
+        R.string.weather_south_west,
+        R.string.weather_west,
+        R.string.weather_north_west
+    )
+    val index = ((this + 22.5) / 45.0).toInt() and 7
+    return stringResource(id = directions[index])
+}

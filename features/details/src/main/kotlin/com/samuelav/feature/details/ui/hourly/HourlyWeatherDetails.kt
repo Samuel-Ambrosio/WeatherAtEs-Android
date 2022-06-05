@@ -1,29 +1,39 @@
 package com.samuelav.feature.details.ui.hourly
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyGridScope
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.Card
 import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.MaterialTheme.shapes
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import com.samuelav.common.extensions.format
 import com.samuelav.commonandroid.app.AppState
+import com.samuelav.commonandroid.extensions.cardinalDirection
 import com.samuelav.commonandroid.extensions.icon
 import com.samuelav.commonandroid.ui.composables.base.BodyLargeBold
 import com.samuelav.commonandroid.ui.composables.base.BodyLargeRegular
 import com.samuelav.commonandroid.ui.composables.base.Screen
 import com.samuelav.commonandroid.ui.theme.AppTheme.colors
+import com.samuelav.commonandroid.ui.theme.AppTheme.icons
 import com.samuelav.commonandroid.ui.theme.AppTheme.spacing
 import com.samuelav.data.model.weather.HourlyWeatherBO
-import com.samuelav.data.model.weather.WeatherOneCallBO
+import com.samuelav.feature.details.R
+import com.samuelav.feature.details.WeatherElement
 import org.koin.androidx.compose.getViewModel
 import org.koin.core.parameter.parametersOf
 
@@ -58,8 +68,8 @@ fun HourlyWeatherDetails(
                         capitalize = true)
 
                     HourlyWeatherDetailsContent(
-                        weatherInfo = weatherInfo,
-                        position = currentPage)
+                        location = weatherInfo.location,
+                        hourlyWeather = weatherInfo.hourly[currentPage])
                 }
             }
         }
@@ -68,16 +78,29 @@ fun HourlyWeatherDetails(
 
 @Composable
 private fun HourlyWeatherDetailsContent(
-    weatherInfo: WeatherOneCallBO,
-    position: Int
+    modifier: Modifier = Modifier,
+    location: String,
+    hourlyWeather: HourlyWeatherBO
 ) {
-    Column(
-        modifier = Modifier.padding(horizontal = spacing.s).verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.Top
+    LazyVerticalGrid(
+        modifier = modifier.fillMaxWidth().padding(horizontal = spacing.s),
+        columns = GridCells.Adaptive(140.dp)
     ) {
-        HourlyWeatherDetailsHeader(
-            location = weatherInfo.location,
-            hourlyWeather = weatherInfo.hourly[position])
+        item(span = { GridItemSpan(Int.MAX_VALUE) }) {
+            HourlyWeatherDetailsHeader(
+                location = location,
+                hourlyWeather = hourlyWeather)
+        }
+
+        item(span = { GridItemSpan(Int.MAX_VALUE) }) {
+            BodyLargeBold(
+                modifier = Modifier.fillMaxWidth().padding(vertical = spacing.m),
+                text = stringResource(id = R.string.weather_detail_title),
+                textAlign = TextAlign.Center
+            )
+        }
+
+        weatherElements(hourlyWeather = hourlyWeather)
     }
 }
 
@@ -107,5 +130,74 @@ private fun HourlyWeatherDetailsHeader(
 
             BodyLargeBold(text = location, color = colors.onPrimary)
         }
+    }
+}
+
+private fun LazyGridScope.weatherElements(
+    hourlyWeather: HourlyWeatherBO
+) {
+    item {
+        WeatherElement(
+            modifier = Modifier.padding(spacing.xs),
+            icon = icons.temperature,
+            value = hourlyWeather.feelsLike.toInt().toString() + " ºC",   //TODO
+            type = stringResource(R.string.weather_feels_like),
+        )
+    }
+    item {
+        WeatherElement(
+            modifier = Modifier.padding(spacing.xs),
+            icon = icons.airPressure,
+            value = hourlyWeather.pressure.toString() + " hPa",
+            type = stringResource(R.string.weather_pressure),
+        )
+    }
+    item {
+        WeatherElement(
+            modifier = Modifier.padding(spacing.xs),
+            icon = icons.humidity,
+            value = hourlyWeather.humidity.toString() + " %",
+            type = stringResource(R.string.weather_humidity),
+        )
+    }
+    item {
+        WeatherElement(
+            modifier = Modifier.padding(spacing.xs),
+            icon = icons.cloudiness,
+            value = hourlyWeather.clouds.toString() + " %",
+            type = stringResource(R.string.weather_cloudiness),
+        )
+    }
+    item {
+        WeatherElement(
+            modifier = Modifier.padding(spacing.xs),
+            icon = icons.wind,
+            value = hourlyWeather.windSpeed.toString() + " m/s",     //TODO
+            type = stringResource(R.string.weather_wind),
+        )
+    }
+    item {
+        WeatherElement(
+            modifier = Modifier.padding(spacing.xs),
+            icon = icons.wind,
+            value = hourlyWeather.windGust.toString() + " m/s",      //TODO
+            type = stringResource(R.string.weather_wind_gust),
+        )
+    }
+    item {
+        WeatherElement(
+            modifier = Modifier.padding(spacing.xs),
+            icon = icons.wind,
+            value = hourlyWeather.windDeg.cardinalDirection(),
+            type = stringResource(R.string.weather_wind_dir),
+        )
+    }
+    item {
+        WeatherElement(
+            modifier = Modifier.padding(spacing.xs),
+            icon = icons.visibility,
+            value = (hourlyWeather.visibility/1000).toString() + " km",
+            type = stringResource(R.string.weather_visibility),
+        )
     }
 }

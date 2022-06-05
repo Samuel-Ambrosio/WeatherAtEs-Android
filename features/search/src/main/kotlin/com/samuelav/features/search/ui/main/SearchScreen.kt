@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import com.samuelav.commonandroid.app.AppState
 import com.samuelav.commonandroid.extensions.clearFocusOnClick
 import com.samuelav.commonandroid.ui.composables.base.BodyMediumRegular
@@ -56,23 +57,25 @@ internal fun SearchScreen(
                         color = colors.onSurface.copy(ContentAlpha.medium))
                 },
                 trailingIcon = {
-                    if (inputSearch.isNotBlank()) {
-                        IconButton(onClick = {
-                            inputSearch = ""
-                            viewModel.resetSearch()
-                        }) {
-                            Icon(painter = icons.close.painter, contentDescription = null)
+                    when {
+                        state.isLoading -> CircularProgressIndicator(modifier = Modifier.size(24.dp))
+                        inputSearch.isNotBlank() || state.results.isNotEmpty() -> {
+                            IconButton(onClick = {
+                                inputSearch = ""
+                                viewModel.resetSearch()
+                            }) {
+                                Icon(painter = icons.close.painter, contentDescription = null)
+                            }
                         }
-                    } else {
-                        Icon(painter = icons.search.painter, contentDescription = null)
+                        else -> {
+                            Icon(painter = icons.search.painter, contentDescription = null)
+                        }
                     }
                 },
                 shape = shapes.large
             )
 
             Column(modifier = Modifier.padding(horizontal = spacing.m)) {
-                if (state.isLoading) LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
-
                 if (state.results.isEmpty()) {
                     BodyMediumRegular(
                         modifier = Modifier.padding(top = spacing.m),

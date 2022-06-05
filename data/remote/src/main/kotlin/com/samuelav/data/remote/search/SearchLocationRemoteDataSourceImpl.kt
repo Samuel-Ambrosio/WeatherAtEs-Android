@@ -15,7 +15,7 @@ class SearchLocationRemoteDataSourceImpl(
             Result.Success(
                 addresses.map { address ->
                     val locality = address.locality?.let { it } ?: ""
-                    val subAdminArea = address.subAdminArea?.let { "($it)" } ?: ""
+                    val subAdminArea = address.subAdminArea?.let { if (address != null) "($it)" else it } ?: ""
                     val countryName = address.countryName?.let { ", $it" } ?: ""
                     SearchResult(
                         lat = address.latitude,
