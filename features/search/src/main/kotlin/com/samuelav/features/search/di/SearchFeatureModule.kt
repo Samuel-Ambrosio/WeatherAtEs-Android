@@ -11,6 +11,7 @@ val searchFeatureModule = module {
         SearchedLocationViewModel(
             lat = params[0],
             lon = params[1],
-            searchWeatherUseCase = get())
+            searchWeatherUseCase = get(),
+            saveLocationCoordinateUseCase = get())
     }
 }

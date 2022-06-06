@@ -10,17 +10,24 @@ class SearchLocationRemoteDataSourceImpl(
     private val geocoder: Geocoder
 ): SearchLocationRemoteDataSource {
     override suspend fun search(query: String): Result<Error, List<SearchResult>> {
-        val addresses = geocoder.getFromLocationName(query, 10)
+        val addresses = try {
+            geocoder.getFromLocationName(query, 20)
+        } catch (ex: Exception) {
+            return Result.Failure(Error.Network)
+        }
+
         return if (addresses.isNotEmpty()) {
             Result.Success(
-                addresses.map { address ->
+                addresses.mapNotNull { address ->
                     val locality = address.locality?.let { it } ?: ""
                     val subAdminArea = address.subAdminArea?.let { if (address != null) "($it)" else it } ?: ""
                     val countryName = address.countryName?.let { ", $it" } ?: ""
-                    SearchResult(
-                        lat = address.latitude,
-                        lon = address.longitude,
-                        location = "$locality $subAdminArea $countryName")
+                    if (locality.isNotBlank() || subAdminArea.isNotBlank()) {
+                        SearchResult(
+                            lat = address.latitude,
+                            lon = address.longitude,
+                            location = "$locality $subAdminArea $countryName")
+                    } else null
                 })
         } else {
             Result.Failure(Error.NotFound)

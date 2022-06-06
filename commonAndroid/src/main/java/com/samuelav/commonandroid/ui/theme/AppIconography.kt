@@ -40,6 +40,7 @@ object AppIconography {
     val humidity: Icon = Icon(resId = R.drawable.ic_humidity)
     val sunriseSunset: Icon = Icon(resId = R.drawable.ic_sunrise_sunset)
     val visibility: Icon = Icon(resId = R.drawable.ic_visibility)
+    val saveLocation: Icon = Icon(resId = R.drawable.ic_push_pin)
 }
 
 data class Icon(@DrawableRes val resId: Int) {

@@ -18,6 +18,7 @@ fun AppNavigation(
     appState: AppState = rememberAppState()
 ) {
     Scaffold(
+        scaffoldState = appState.scaffoldState,
         topBar = {
             AnimatedVisibility(
                 visible = appState.isAppTopBarVisible(),
