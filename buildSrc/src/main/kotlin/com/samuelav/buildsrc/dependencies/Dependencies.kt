@@ -33,7 +33,7 @@ sealed class Dependencies {
         const val composeFoundation = "androidx.compose.foundation:foundation:${Versions.AndroidX.compose}"
         const val composeIconsCore = "androidx.compose.material:material-icons-core:${Versions.AndroidX.compose}"
         const val composeIconsExtended = "androidx.compose.material:material-icons-extended:${Versions.AndroidX.compose}"
-        const val composeRuntimeLiveData = "androidx.compose.runtime:runtime-livedata:${Versions.AndroidX.compose}"
+        const val composeRuntime = "androidx.compose.runtime:runtime:${Versions.AndroidX.compose}"
 
         const val composeActivity = "androidx.activity:activity-compose:${Versions.AndroidX.composeActivity}"
         const val composeNavigation = "androidx.navigation:navigation-compose:${Versions.AndroidX.composeNavigation}"
@@ -65,13 +65,5 @@ sealed class Dependencies {
 
     object OkHttp3 {
         const val interceptor = "com.squareup.okhttp3:logging-interceptor:${Versions.OkHttp3.interceptor}"
-    }
-
-    object Test {
-        const val junit = "junit:junit:${Versions.Test.junit}"
-        const val androidJunit = "androidx.test.ext:junit:${Versions.Test.androidJunit}"
-        const val androidJunitCompose = "androidx.compose.ui:ui-test-junit4:${Versions.Test.androidJunitCompose}"
-        const val androidUiTestCompose = "androidx.compose.ui:ui-test-manifest:${Versions.Test.androidUiTestCompose}"
-        const val androidEspresso = "androidx.test.espresso:espresso-core:${Versions.Test.androidEspresso}"
     }
 }

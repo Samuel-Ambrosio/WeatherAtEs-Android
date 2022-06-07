@@ -18,7 +18,6 @@ android {
         targetSdk AppConfig.targetSdkVersion
         minSdk AppConfig.minSdkVersion
 
-        testInstrumentationRunner AppConfig.testInstrumentationRunner
         vectorDrawables {
             useSupportLibrary true
         }
@@ -87,10 +86,8 @@ dependencies {
 
     implementation Dependencies.Koin.android
 
-    testImplementation Dependencies.Test.junit
-    androidTestImplementation Dependencies.Test.androidJunit
-    androidTestImplementation Dependencies.Test.androidEspresso
     debugImplementation Dependencies.AndroidX.debugComposeUiTooling
 
+    implementation Dependencies.AndroidX.composeRuntime
     coreLibraryDesugaring Dependencies.Android.desugarJdkLibs
 }

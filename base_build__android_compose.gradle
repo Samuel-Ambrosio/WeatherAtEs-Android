@@ -8,7 +8,6 @@ dependencies {
     implementation Dependencies.AndroidX.composeFoundation
     implementation Dependencies.AndroidX.composeIconsCore
     implementation Dependencies.AndroidX.composeIconsExtended
-    implementation Dependencies.AndroidX.composeRuntimeLiveData
 
     implementation Dependencies.AndroidX.composeActivity
     implementation Dependencies.AndroidX.composeNavigation
@@ -23,5 +22,4 @@ dependencies {
     implementation Dependencies.Google.accompanistPlaceholder
 
     debugImplementation Dependencies.AndroidX.composeUiTooling
-    androidTestImplementation Dependencies.Test.androidJunitCompose
 }
