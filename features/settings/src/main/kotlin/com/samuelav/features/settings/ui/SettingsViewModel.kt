@@ -15,8 +15,8 @@ import kotlinx.coroutines.launch
 internal class SettingsViewModel(
     private val changeLocationAsDefaultUseCase: ChangeLocationAsDefaultUseCase,
     private val changeWeatherUnitUseCase: ChangeWeatherUnitUseCase,
-    private val isLocationAsDefaultUseCase: IsLocationAsDefaultUseCase,
-    private val getWeatherUnitUseCase: GetWeatherUnitUseCase,
+    isLocationAsDefaultUseCase: IsLocationAsDefaultUseCase,
+    getWeatherUnitUseCase: GetWeatherUnitUseCase,
 ): BaseViewModel<SettingsState, Unit>(SettingsState()) {
 
     init {

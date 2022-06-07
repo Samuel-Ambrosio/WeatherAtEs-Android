@@ -9,12 +9,14 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.samuelav.commonandroid.app.AppState
 import com.samuelav.commonandroid.extensions.clearFocusOnClick
+import com.samuelav.commonandroid.ui.base.CommandHandler
 import com.samuelav.commonandroid.ui.composables.base.BodyMediumRegular
 import com.samuelav.commonandroid.ui.composables.base.Screen
 import com.samuelav.commonandroid.ui.theme.AppTheme.colors
@@ -36,6 +38,16 @@ internal fun SearchScreen(
         ) {
             val viewModel: SearchScreenViewModel = getViewModel()
             val state by viewModel.state.collectAsState()
+            val context = LocalContext.current
+
+            CommandHandler(viewModel = viewModel) { command ->
+                when (command) {
+                    is SearchScreenCommand.Failure ->
+                        appState.scaffoldState.snackbarHostState
+                            .showSnackbar(message = context.getString(command.messageRes))
+                }
+            }
+
             var inputSearch by rememberSaveable { mutableStateOf("") }
 
             OutlinedTextField(

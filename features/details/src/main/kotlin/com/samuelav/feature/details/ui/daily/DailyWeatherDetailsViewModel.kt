@@ -1,7 +1,9 @@
 package com.samuelav.feature.details.ui.daily
 
+import androidx.annotation.StringRes
 import androidx.lifecycle.viewModelScope
 import com.samuelav.common.utils.fold
+import com.samuelav.commonandroid.extensions.handleErrorMessage
 import com.samuelav.commonandroid.ui.base.BaseViewModel
 import com.samuelav.data.model.weather.WeatherOneCallBO
 import com.samuelav.domain.weather.GetSearchedWeatherUseCase
@@ -12,7 +14,7 @@ internal class DailyWeatherDetailsViewModel(
     isSearch: Boolean,
     private val getWeatherUseCase: GetWeatherUseCase,
     private val getSearchedWeatherUseCase: GetSearchedWeatherUseCase
-): BaseViewModel<DailyWeatherDetailsState, Unit>(DailyWeatherDetailsState.Loading) {
+): BaseViewModel<DailyWeatherDetailsState, DailyWeatherDetailsCommand>(DailyWeatherDetailsState.Loading) {
     init {
         viewModelScope.launch {
             if (isSearch) {
@@ -20,7 +22,7 @@ internal class DailyWeatherDetailsViewModel(
                     isLoading = { emitState(DailyWeatherDetailsState.Loading) },
                     isSuccess = { emitState(DailyWeatherDetailsState.Success(weatherInfo = it)) },
                     isFailure = {
-                        // Emit command
+                        emitCommand(DailyWeatherDetailsCommand.Failure(it.handleErrorMessage()))
                     }
                 )
             } else {
@@ -28,7 +30,7 @@ internal class DailyWeatherDetailsViewModel(
                     isLoading = { emitState(DailyWeatherDetailsState.Loading) },
                     isSuccess = { emitState(DailyWeatherDetailsState.Success(weatherInfo = it)) },
                     isFailure = {
-                        // Emit command
+                        emitCommand(DailyWeatherDetailsCommand.Failure(it.handleErrorMessage()))
                     }
                 )
             }
@@ -39,4 +41,8 @@ internal class DailyWeatherDetailsViewModel(
 internal sealed class DailyWeatherDetailsState {
     object Loading: DailyWeatherDetailsState()
     data class Success(val weatherInfo: WeatherOneCallBO): DailyWeatherDetailsState()
+}
+
+internal sealed class DailyWeatherDetailsCommand {
+    data class Failure(@StringRes val messageRes: Int): DailyWeatherDetailsCommand()
 }

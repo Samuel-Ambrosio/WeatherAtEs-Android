@@ -1,7 +1,9 @@
 package com.samuelav.features.home.ui
 
+import androidx.annotation.StringRes
 import androidx.lifecycle.viewModelScope
 import com.samuelav.common.utils.fold
+import com.samuelav.commonandroid.extensions.handleErrorMessage
 import com.samuelav.commonandroid.ui.base.BaseViewModel
 import com.samuelav.data.model.weather.WeatherOneCallBO
 import com.samuelav.domain.location.GetLocationCoordinateUseCase
@@ -18,7 +20,7 @@ internal class MainViewModel(
     private val getLocationCoordinateUseCase: GetLocationCoordinateUseCase,
     isConfigurationChangedUseCase: IsConfigurationChangedUseCase,
     configurationChangesAppliedUseCase: ConfigurationChangesAppliedUseCase,
-): BaseViewModel<MainState, Unit>(MainState()) {
+): BaseViewModel<MainState, MainCommand>(MainState()) {
 
     init {
         isConfigurationChangedUseCase().onEach { isChanged ->
@@ -43,7 +45,7 @@ internal class MainViewModel(
                 isSuccess = { emitState(MainState(isLoading = false, weatherInfo = it)) },
                 isFailure = {
                     emitState(state.value.copy(isLoading = false))
-                    // Emit command
+                    emitCommand(MainCommand.Failure(it.handleErrorMessage()))
                 }
             )
         }
@@ -53,3 +55,7 @@ internal class MainViewModel(
 internal data class MainState(
     val isLoading: Boolean = true,
     val weatherInfo: WeatherOneCallBO? = null)
+
+internal sealed class MainCommand {
+    data class Failure(@StringRes val messageRes: Int): MainCommand()
+}

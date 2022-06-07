@@ -3,6 +3,7 @@ package com.samuelav.data.repository.utils
 import com.samuelav.common.utils.Error
 import com.samuelav.common.utils.Result
 import com.samuelav.common.utils.ifSuccess
+import com.samuelav.common.utils.isSuccess
 import kotlinx.coroutines.coroutineScope
 
 abstract class CacheRepositoryResponse<T> {
@@ -23,7 +24,7 @@ abstract class CacheRepositoryResponse<T> {
                 if (dbResult == null || forceFetch || shouldFetchFromRemote(dbResult)) {
                     val networkResult = loadFromRemote()
                     networkResult.ifSuccess { saveRemoteResult(it) }
-                    loadFromLocal()?.let { Result.Success(it) }
+                    loadFromLocal()?.takeIf { networkResult.isSuccess }?.let { Result.Success(it) }
                         ?: networkResult as? Result.Failure
                         ?: Result.Failure(Error.NotFound)
                 } else {

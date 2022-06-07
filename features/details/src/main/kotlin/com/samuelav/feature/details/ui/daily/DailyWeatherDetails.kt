@@ -12,6 +12,7 @@ import androidx.compose.material.MaterialTheme.shapes
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -22,6 +23,7 @@ import com.samuelav.common.extensions.format
 import com.samuelav.commonandroid.app.AppState
 import com.samuelav.commonandroid.extensions.cardinalDirection
 import com.samuelav.commonandroid.extensions.icon
+import com.samuelav.commonandroid.ui.base.CommandHandler
 import com.samuelav.commonandroid.ui.composables.base.BodyLargeBold
 import com.samuelav.commonandroid.ui.composables.base.BodyLargeRegular
 import com.samuelav.commonandroid.ui.composables.base.BodySmallRegular
@@ -49,8 +51,17 @@ fun DailyWeatherDetails(
     Screen(appState = appState, titleTopBar = titleTopBar, onBackClick = onBackClick) {
         val viewModel: DailyWeatherDetailsViewModel = getViewModel { parametersOf(isSearch) }
         val state by viewModel.state.collectAsState()
+        val context = LocalContext.current
 
         val pagerState = rememberPagerState(initialPage = initialPage)
+
+        CommandHandler(viewModel = viewModel) { command ->
+            when (command) {
+                is DailyWeatherDetailsCommand.Failure ->
+                    appState.scaffoldState.snackbarHostState
+                        .showSnackbar(message = context.getString(command.messageRes))
+            }
+        }
 
         when (state) {
             is DailyWeatherDetailsState.Loading ->

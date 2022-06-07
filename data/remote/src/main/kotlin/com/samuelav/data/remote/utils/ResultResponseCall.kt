@@ -59,7 +59,6 @@ internal class ResultResponseCall<S : Any>(
     override fun request(): Request = call.request()
     override fun timeout(): Timeout = call.timeout()
 
-    // TODO: Modify API errors
     private fun HttpException.handleHttpException(): Error =
         when (code()) {
             400 -> Error.BadRequest
