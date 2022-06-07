@@ -1,7 +1,5 @@
 package com.samuelav.features.search.ui.main
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -14,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
 import com.samuelav.commonandroid.app.AppState
 import com.samuelav.commonandroid.extensions.clearFocusOnClick
 import com.samuelav.commonandroid.ui.composables.base.BodyMediumRegular
@@ -44,7 +43,7 @@ internal fun SearchScreen(
                 value = inputSearch,
                 onValueChange = {
                     inputSearch = it
-                    if (it.length >= 3) {
+                    if (it.length >= 2) {
                         viewModel.search(query = it)
                     } else {
                         viewModel.resetSearch()
@@ -87,15 +86,14 @@ internal fun SearchScreen(
 
                 LazyColumn(modifier = Modifier.fillMaxWidth()) {
                     items(state.results) {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .clickable { onSearchLocationClick(it.lat, it.lon) }
-                                .background(colors.surface)
-                                .padding(spacing.s)
-                        ) {
-                            BodyMediumRegular(text = it.location)
-                        }
+                        AndroidView(
+                            factory = { context ->
+                                SearchResultItemView(context).apply {
+                                    searchResult = it
+                                    onClick = onSearchLocationClick
+                                }
+                            }
+                        )
                     }
                 }
             }
