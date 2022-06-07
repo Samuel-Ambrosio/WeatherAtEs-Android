@@ -1,9 +1,7 @@
 package com.samuelav.domain.di
 
 import com.samuelav.domain.location.GetLocationCoordinateUseCase
-import com.samuelav.domain.preferences.ConfigurationChangesAppliedUseCase
-import com.samuelav.domain.preferences.IsConfigurationChangedUseCase
-import com.samuelav.domain.preferences.SaveLocationCoordinateUseCase
+import com.samuelav.domain.preferences.*
 import com.samuelav.domain.search.SearchLocationUseCase
 import com.samuelav.domain.weather.GetSearchedWeatherUseCase
 import com.samuelav.domain.weather.GetWeatherUseCase
@@ -24,4 +22,8 @@ val domainModule = module {
     single { IsConfigurationChangedUseCase(preferencesRepository = get()) }
     single { ConfigurationChangesAppliedUseCase(preferencesRepository = get()) }
     single { SaveLocationCoordinateUseCase(preferencesRepository = get()) }
+    single { ChangeLocationAsDefaultUseCase(preferencesRepository = get()) }
+    single { ChangeWeatherUnitUseCase(preferencesRepository = get()) }
+    single { GetWeatherUnitUseCase(preferencesRepository = get()) }
+    single { IsLocationAsDefaultUseCase(preferencesRepository = get()) }
 }

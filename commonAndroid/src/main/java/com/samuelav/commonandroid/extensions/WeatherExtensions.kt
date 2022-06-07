@@ -5,6 +5,7 @@ import androidx.compose.ui.res.stringResource
 import com.samuelav.commonandroid.R
 import com.samuelav.commonandroid.ui.theme.AppTheme.icons
 import com.samuelav.data.model.weather.WeatherStateBO
+import com.samuelav.data.model.weather.WeatherUnit
 
 @Composable
 fun WeatherStateBO.icon() =
@@ -45,3 +46,13 @@ fun Double.cardinalDirection(): String {
     val index = ((this + 22.5) / 45.0).toInt() and 7
     return stringResource(id = directions[index])
 }
+
+@Composable
+fun WeatherUnit.textName() =
+    stringResource(
+        id = when (this) {
+            is WeatherUnit.Metric -> R.string.unit_measurement_config_metric
+            is WeatherUnit.Imperial -> R.string.unit_measurement_config_imperial
+            is WeatherUnit.Standard -> R.string.unit_measurement_config_standard
+        }
+    )

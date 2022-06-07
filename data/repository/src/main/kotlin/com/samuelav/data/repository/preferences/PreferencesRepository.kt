@@ -11,6 +11,7 @@ interface PreferencesRepository {
     suspend fun changeLocationAsDefault()
     fun isLocationAsDefault(): Flow<Boolean>
     suspend fun changeWeatherUnit(weatherUnit: WeatherUnit)
+    fun getWeatherUnit(): Flow<WeatherUnit>
     suspend fun configurationChangesApplied()
     fun isConfigurationChanged(): Flow<Boolean>
 }
@@ -35,6 +36,9 @@ class PreferencesRepositoryImpl(
     override suspend fun changeWeatherUnit(weatherUnit: WeatherUnit) {
         preferencesLocalDataSource.changeWeatherUnit(weatherUnit = weatherUnit)
     }
+
+    override fun getWeatherUnit(): Flow<WeatherUnit> =
+        preferencesLocalDataSource.getWeatherUnit()
 
     override suspend fun configurationChangesApplied() {
         preferencesLocalDataSource.configurationChangesApplied()

@@ -26,8 +26,8 @@
     <string name="search_bar_placeholder">Search for a city</string>
     <string name="search_help_text">Search for a location to see the current and upcoming weather, as well as being able to set it on the main screen.</string>
     <string name="setting_changes_help">The changes will be applied automatically when a data update is made</string>
-    <string name="data_provider_text">Weather data provided by [OpenWeather](https://openweathermap.org)</string>
-    <string name="developed_by_text">Developed by Samuel A.V. for [MIMO UPSA](https://web.upsa.es/mimo/)</string>
+    <string name="data_provider_text">Weather data provided by </string>
+    <string name="developed_by_text">Developed by Samuel A.V. for</string>
     <string name="activate_location_rationale_title">Activate location</string>
     <string name="activate_location_rationale_description">Your location lets us show you the current weather where you are. We will only use the last known location.</string>
     <string name="activate_location_rationale_confirm">Activate</string>

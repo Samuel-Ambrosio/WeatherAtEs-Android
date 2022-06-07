@@ -9,6 +9,7 @@ import com.samuelav.domain.preferences.ConfigurationChangesAppliedUseCase
 import com.samuelav.domain.preferences.IsConfigurationChangedUseCase
 import com.samuelav.domain.weather.GetWeatherUseCase
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
@@ -25,7 +26,7 @@ internal class MainViewModel(
                 fetchWeatherInfo(refresh = true)
                 viewModelScope.launch { configurationChangesAppliedUseCase() }
             }
-        }
+        }.launchIn(viewModelScope)
     }
 
     fun fetchWeatherInfo(refresh: Boolean = false) {
