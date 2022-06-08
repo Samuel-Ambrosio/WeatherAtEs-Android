@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -28,11 +29,13 @@ import com.samuelav.commonandroid.ui.composables.base.BodyLargeBold
 import com.samuelav.commonandroid.ui.composables.base.BodyLargeRegular
 import com.samuelav.commonandroid.ui.composables.base.BodySmallRegular
 import com.samuelav.commonandroid.ui.composables.base.Screen
+import com.samuelav.commonandroid.ui.theme.AppTheme
 import com.samuelav.commonandroid.ui.theme.AppTheme.colors
 import com.samuelav.commonandroid.ui.theme.AppTheme.icons
 import com.samuelav.commonandroid.ui.theme.AppTheme.spacing
 import com.samuelav.data.model.weather.DailyWeatherBO
 import com.samuelav.data.model.weather.WeatherUnit
+import com.samuelav.data.model.weather.mock.weatherOneCallBOMock
 import com.samuelav.feature.details.R
 import com.samuelav.feature.details.ui.WeatherElement
 import org.koin.androidx.compose.getViewModel
@@ -238,6 +241,18 @@ private fun LazyGridScope.weatherElements(
             icon = icons.wind,
             value = dailyWeather.windDeg.cardinalDirection(),
             type = stringResource(R.string.weather_wind_dir),
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun DailyWeatherDetailsContentPreview() {
+    AppTheme {
+        DailyWeatherDetailsContent(
+            location = weatherOneCallBOMock.location,
+            weatherUnit = weatherOneCallBOMock.weatherUnit,
+            dailyWeather = weatherOneCallBOMock.daily.first()
         )
     }
 }

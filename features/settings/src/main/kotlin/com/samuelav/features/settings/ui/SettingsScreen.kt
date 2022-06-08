@@ -14,6 +14,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
@@ -24,11 +25,13 @@ import com.samuelav.commonandroid.ui.composables.base.BodyMediumRegular
 import com.samuelav.commonandroid.ui.composables.base.BodySmallRegular
 import com.samuelav.commonandroid.ui.composables.base.Screen
 import com.samuelav.commonandroid.ui.composables.components.HorizontalSeparator
+import com.samuelav.commonandroid.ui.theme.AppTheme
 import com.samuelav.commonandroid.ui.theme.AppTheme.colors
 import com.samuelav.commonandroid.ui.theme.AppTheme.icons
 import com.samuelav.commonandroid.ui.theme.AppTheme.spacing
 import com.samuelav.commonandroid.ui.theme.AppTheme.typography
 import com.samuelav.data.model.weather.WeatherUnit
+import com.samuelav.data.model.weather.mock.weatherOneCallBOMock
 import com.samuelav.features.settings.R
 import org.koin.androidx.compose.getViewModel
 
@@ -206,5 +209,29 @@ private fun Footer(
                 .getStringAnnotations(tag = "link", start = offset, end = offset)
                 .firstOrNull()?.let { uriHandler.openUri(it.item) }
         }
+    }
+}
+
+@Preview
+@Composable
+private fun ConfigurationListPreview() {
+    AppTheme {
+        ConfigurationList(
+            modifier = Modifier.fillMaxWidth(),
+            state =
+                SettingsState(
+                    isLocationByDefault = true,
+                    weatherUnit = weatherOneCallBOMock.weatherUnit),
+            onLocationByDefaultChange = {},
+            onWeatherUnitSelected = {}
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun FooterPreview() {
+    AppTheme {
+        Footer(modifier = Modifier.fillMaxWidth())
     }
 }

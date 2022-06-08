@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
@@ -30,11 +31,13 @@ import com.samuelav.commonandroid.ui.composables.base.Screen
 import com.samuelav.commonandroid.ui.composables.weather.CurrentWeather
 import com.samuelav.commonandroid.ui.composables.weather.DailyWeather
 import com.samuelav.commonandroid.ui.composables.weather.HourlyWeather
+import com.samuelav.commonandroid.ui.theme.AppTheme
 import com.samuelav.commonandroid.ui.theme.AppTheme.colors
 import com.samuelav.commonandroid.ui.theme.AppTheme.icons
 import com.samuelav.commonandroid.ui.theme.AppTheme.spacing
 import com.samuelav.data.model.weather.WeatherOneCallBO
 import com.samuelav.data.model.weather.WeatherUnit
+import com.samuelav.data.model.weather.mock.weatherOneCallBOMock
 import com.samuelav.features.home.R
 import org.koin.androidx.compose.getViewModel
 
@@ -197,6 +200,19 @@ private fun LocationPermissionManagement(
             },
             shape = shapes.large,
             backgroundColor = colors.surface
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun MainScreenContentPreview() {
+    AppTheme {
+        MainScreenContent(
+            isLoading = false,
+            weatherInfo = weatherOneCallBOMock,
+            onHourlyWeatherClick = {},
+            onDailyWeatherClick = {}
         )
     }
 }

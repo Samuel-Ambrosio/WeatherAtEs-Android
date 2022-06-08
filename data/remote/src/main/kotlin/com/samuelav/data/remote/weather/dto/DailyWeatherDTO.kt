@@ -35,8 +35,6 @@ data class DailyWeatherDTO(
     val uvi: Double,
     @SerializedName("clouds")
     val clouds: Int,
-    @SerializedName("visibility")
-    val visibility: Int,
     @SerializedName("wind_speed")
     val windSpeed: Double,
     @SerializedName("wind_deg")
@@ -88,7 +86,6 @@ fun DailyWeatherDTO.toBO() =
         dewPoint = dewPoint,
         uvi = uvi,
         clouds = clouds,
-        visibility = visibility,
         windSpeed = windSpeed,
         windDeg = windDeg,
         windGust = windGust,

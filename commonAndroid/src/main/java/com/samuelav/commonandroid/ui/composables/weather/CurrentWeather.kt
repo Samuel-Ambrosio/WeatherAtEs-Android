@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.placeholder
@@ -18,11 +19,13 @@ import com.samuelav.commonandroid.extensions.icon
 import com.samuelav.commonandroid.ui.composables.base.BodyLargeBold
 import com.samuelav.commonandroid.ui.composables.base.BodyLargeRegular
 import com.samuelav.commonandroid.ui.composables.base.BodyMediumRegular
+import com.samuelav.commonandroid.ui.theme.AppTheme
 import com.samuelav.commonandroid.ui.theme.AppTheme.colors
 import com.samuelav.commonandroid.ui.theme.AppTheme.icons
 import com.samuelav.commonandroid.ui.theme.AppTheme.spacing
 import com.samuelav.data.model.weather.CurrentWeatherBO
 import com.samuelav.data.model.weather.WeatherUnit
+import com.samuelav.data.model.weather.mock.weatherOneCallBOMock
 
 @Composable
 fun CurrentWeather(
@@ -66,5 +69,18 @@ fun CurrentWeather(
                         (currentWeather?.dateTime?.format("HH:mm") ?: "-"),
                 color = colors.onPrimary)
         }
+    }
+}
+
+@Preview
+@Composable
+private fun CurrentWeatherPreview() {
+    AppTheme {
+        CurrentWeather(
+            isLoading = false,
+            location = weatherOneCallBOMock.location,
+            weatherUnit = weatherOneCallBOMock.weatherUnit,
+            currentWeather = weatherOneCallBOMock.current
+        )
     }
 }
