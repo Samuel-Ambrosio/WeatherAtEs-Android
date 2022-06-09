@@ -21,5 +21,6 @@ dependencies {
     implementation Dependencies.Google.accompanistSwipeToRefresh
     implementation Dependencies.Google.accompanistPlaceholder
 
+    implementation Dependencies.AndroidX.composeUiToolingPreview
     debugImplementation Dependencies.AndroidX.composeUiTooling
 }

@@ -86,8 +86,6 @@ dependencies {
 
     implementation Dependencies.Koin.android
 
-    debugImplementation Dependencies.AndroidX.debugComposeUiTooling
-
     implementation Dependencies.AndroidX.composeRuntime
     coreLibraryDesugaring Dependencies.Android.desugarJdkLibs
 }

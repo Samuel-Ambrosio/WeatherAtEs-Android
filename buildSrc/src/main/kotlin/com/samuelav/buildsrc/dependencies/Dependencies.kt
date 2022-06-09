@@ -27,8 +27,8 @@ sealed class Dependencies {
         const val lifecycleExtensions = "androidx.lifecycle:lifecycle-extensions:${Versions.AndroidX.lifecycleExtensions}"
 
         const val composeUi = "androidx.compose.ui:ui:${Versions.AndroidX.compose}"
-        const val composeUiTooling = "androidx.compose.ui:ui-tooling-preview:${Versions.AndroidX.compose}"
-        const val debugComposeUiTooling = "androidx.compose.ui:ui-tooling:${Versions.AndroidX.compose}"
+        const val composeUiToolingPreview = "androidx.compose.ui:ui-tooling-preview:${Versions.AndroidX.compose}"
+        const val composeUiTooling = "androidx.compose.ui:ui-tooling:${Versions.AndroidX.compose}"
         const val composeMaterial = "androidx.compose.material:material:${Versions.AndroidX.compose}"
         const val composeFoundation = "androidx.compose.foundation:foundation:${Versions.AndroidX.compose}"
         const val composeIconsCore = "androidx.compose.material:material-icons-core:${Versions.AndroidX.compose}"
